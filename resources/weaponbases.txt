@@ -1,0 +1,76 @@
+Iron Sword
+A sword made from iron.
+1
+5
+false
+
+
+Iron Axe
+An axe made from iron.
+2
+4
+false
+
+
+Iron Mace
+A mace made from iron.
+3
+3
+false
+
+
+Iron Dagger
+A dagger made of iron.
+2
+4
+false
+
+
+Iron Greatsword
+A greatsword made of iron, requiring two hands.
+1
+10
+true
+
+
+Iron Greataxe
+A greataxe made of iron, requiring two hands.
+3
+7
+true
+
+
+Iron Greathammer
+A greathammer made of iron, requiring two hands.
+4
+6
+true
+
+
+Wood Wand
+A magic wand made of wood.
+1
+5
+false
+
+
+Wood Bow
+A bow made of wood, requiring two hands.
+3
+7
+true
+
+
+Wood Crossbow
+A wooden crossbow, requiring two hands.
+1
+10
+true
+
+
+Wooden Staff
+A magic staff made of wood, requuring two hands.
+1
+10
+true
+

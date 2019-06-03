@@ -1,0 +1,37 @@
+Tina
+1
+Rogue
+100
+100
+100
+0
+100
+100
+100
+0
+2
+1
+0.0
+0.0
+0.0
+10
+3
+3
+Iron Dagger
+A dagger made of iron.
+2
+4
+false
+
+
+
+
+
+
+
+Precise Strike
+A calculated weapon attack. Sets a bleed or stun depending on the weapon used. Works with wands and staves.
+Double Strike
+Two attacks in quick succession.
+Cripple
+Enemy is temporarily blocked from using abilities. Can still perform attacks.

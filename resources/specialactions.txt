@@ -1,0 +1,52 @@
+name
+tag
+desc
+
+Rigid Stance
+ability
+The user steadies themselves to better take attack blows. Reduces damage from attacks.
+Evasive Stance
+ability
+The user focuses more on incoming attacks. Increased evasion rating.
+Guard Stance
+ability
+The user puts emphasis on defensive weapon usage. Increases block chance.
+Counter Stance
+ability
+Depending on your higher stat, the user focuses on parrying attacks or countering spells. Provides a smaller bonus to both if Dex and Arc are equal.
+Resistant Stance
+ability
+The user braces more for spell based damage. Increases spell resistance.
+Rage
+ability
+Adrenaline fills you with fury. You deal more damage of any type but take more damage of all types.
+Precise Strike
+ability
+A calculated weapon attack. Sets a bleed or stun depending on the weapon used. Works with wands and staves.
+Double Strike
+ability
+Two attacks in quick succession.
+Frostbite
+spell
+A cold damage over time spell.
+Shock
+spell
+A jolt of pure lightning energy.
+Firespout
+spell
+An unavoidable spray of fire.
+Heal
+spell
+A healing spell of holy origin. Can target self or enemy.
+Dispel
+spell
+Removes a buff on an enemy or a debuff on yourself.
+Alter Status
+spell
+Removes an ailment from yourself or makes your target more susceptible to ailments.
+Cripple
+spell
+Enemy is temporarily blocked from using abilities. Can still perform attacks.
+Silence
+spell
+Enemy is temporarily unable to cast spells.

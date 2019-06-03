@@ -1,0 +1,41 @@
+Iron Shield
+A shield made from iron.
+2
+0
+0
+
+
+Iron Parrying Dagger
+An iron dagger designed to catch a weapon.
+0
+2
+0
+
+
+Hemlock Talisman
+A tuft of hemlock strands wrapped in beads.
+0
+0
+2
+
+
+Leather Buckler
+A smaller shield for more controlled use.
+1
+1
+0
+
+
+Wood Shield
+A shield made of wood and engraved with runes.
+1
+0
+1
+
+
+Enchanted Iron Dagger
+An iron dagger with latent magical energy.
+0
+1
+1
+
