@@ -1,0 +1,34 @@
+1
+Witchblade
+100
+100
+100
+0
+100
+100
+100
+2
+0
+1
+0.0
+0.0
+0.0
+10
+3
+3
+Iron Sword
+A sword made from iron.
+1
+5
+false
+
+
+Hemlock Talisman
+A tuft of hemlock strands wrapped in beads.
+0
+0
+2
+
+
+Counter Stance
+Depending on your higher stat, the user focuses on parrying attacks or countering spells. Provides a smaller bonus to both if Dex and Arc are equal.

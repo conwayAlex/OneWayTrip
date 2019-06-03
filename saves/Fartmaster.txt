@@ -1,0 +1,38 @@
+1
+Magician
+100
+100
+100
+0
+100
+100
+100
+0
+0
+3
+0.0
+0.0
+0.0
+10
+3
+3
+Wood Wand
+A magic wand made of wood.
+1
+5
+false
+
+
+
+
+
+
+
+
+
+Shock
+A jolt of pure lightning energy.
+Firespout
+An unavoidable spray of fire.
+Silence
+Enemy is temporarily unable to cast spells.

@@ -1,0 +1,45 @@
+Non-Hostile Populated Location
+
+To begin, I'll describe what this entirely encompasses as far as what
+should be considered when building this part. Locations can be hostile
+or non-hostile. An example of a non-hostile location is a village with
+people living in it. I will list below some more examples of what will be
+considered underneath this idea:
+Wandering Trader
+Trade Caravan
+Hamlet
+Village
+Town
+City
+Wizard School
+Archer Guild
+
+The examples vary in population size which means they vary in available
+shops for an adventurer to browse. A wandering trader may only trade 
+a specific type of thing where as a city might have numerous shops of 
+different types. Here is the goal:
+
+These non-hostile populated locations must be randomly generated. We want
+to be able to make as many of them as possible. Each location should provide
+shops for an adventurer to browse and these should be selected at random, with
+more chance of common shop types over rarer ones (ie, general store is more common
+than an alchemist) but shouldn't be impossible to find given enough exploring. The shops
+themselves then must also have a randomized inventory of items related to the type of
+shop it is, general store being sort of a "wild card" by selling lesser items of any kind. The
+content of these shops should be true random and not affected by the player archetype
+weights.
+The player must be able to buy and sell items to any shop. Items do not need to be able to be 
+bought back or seen in the shop inventory. You're welcome to make this possible if you want.
+The types of shops must cover the bases of the various facets of the game. There could be
+more but you would want:
+General Store for random stuff and basic supplies
+Blacksmith for melee weapons and armor
+Fletcher for ranged weapons and armor
+Arcanist for magic weapons and armor
+Alchemist for mundane and special potions
+Tailor, Cobbler, Tanner, Witch, Oddities for various hybrid armor or other strange items
+Various skill trainers selling abilities and spells
+These shops and NPCs do not need to have unique names each time. The locations do not need
+to have unique names. The type of location will give the player an idea of the size of the location
+and maybe what types of shops to expect. Don't worry about balance and feel free to come up with 
+some bogus items for testing purposes. 
