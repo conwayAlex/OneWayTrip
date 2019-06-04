@@ -15,7 +15,14 @@ import java.io.IOException;
  */
 public class ItemGenerator {
     
-
+    /*
+    This class is designed to be the main work horse for making various items as
+    well as the spells and abilities. There are functions for pulling base items
+    from file as well as generating the item objects from a save.(TBD) It will
+    also receive context information about items to randomly generate for things
+    like loot.
+    */
+    
     public Weapon generateWeaponPreFab(String itemName){
         try(FileReader reader = new FileReader("resources\\weaponbases.txt")){
             BufferedReader bReader = new BufferedReader(reader);

@@ -418,6 +418,7 @@ public class UserInterface extends javax.swing.JFrame {
             }
     }//GEN-LAST:event_menuKeyPressed
     private void textFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldActionPerformed
+        
         textEntry = textField.getText();
         eventLog.append("Is " + textEntry + " correct?\n");
         menuItems = game.getMenuText();
@@ -513,6 +514,12 @@ public class UserInterface extends javax.swing.JFrame {
     private String textEntry;
     private javax.swing.ListSelectionModel lsm;
     //My Methods and Classes
+    /*
+    This function will evaluate what menu item is selected at the time of pressing
+    the enter key. It will then start the engine thread and wait for the engine to
+    finish its work before continuing. If the engine determines that the UI must
+    finish the desired task, the UI will run the process function and update itself.
+    */
     private void dispatchCommand() {
         game.choice = menuItems[menuIndex];
         Thread t = new Thread(game);
@@ -540,6 +547,10 @@ public class UserInterface extends javax.swing.JFrame {
             System.out.println("Will listen for next command.");
         }
     }
+    /*
+    So far, the UI only needs to process when the engine needs a text based entry
+    to finish its work. 
+    */
     private void processTask() {
         System.out.println("Engine indicated UI function.");
         switch(game.gameState){
@@ -654,6 +665,7 @@ public class UserInterface extends javax.swing.JFrame {
         spBar.setMaximum(user.getMaxSP());
         
     }
+    //This is needed to let the descriptions update when the menu is interacted with
     private class SelectionHandler implements ListSelectionListener {
         @Override
         public void valueChanged(ListSelectionEvent e) {

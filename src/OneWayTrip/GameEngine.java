@@ -38,6 +38,11 @@ public class GameEngine implements Runnable {
         }
         System.out.println("Engine process complete.");
     }
+    /*
+    This function is designed to determine the state of the game and move itself
+    based on the users choice in the menu fed to the UI. It will kick back tasks
+    to the UI if needed.
+    */
     public void evaluateSelf() throws InterruptedException{
         if(taskForUI){
             return;
@@ -171,6 +176,11 @@ public class GameEngine implements Runnable {
             }
         }
     }
+    /*
+    The menus in the UI need to be updated for every choice the user makes. These
+    are the predefined ones used for the various aspects of gameplay. Further
+    menus will need to be generated for things like inventory lists and loot.
+    */
     public void setLogT(String neededText, String context){
         switch(neededText){
             case "yesNo1":{
@@ -351,6 +361,7 @@ public class GameEngine implements Runnable {
     public String[] getDescText(){
         return optDesc;
     }
+    //Simply finds the last modified game file and opens it
     public void contGame(){
         long time = 0;
         int lastPlayed = -1;
@@ -369,6 +380,7 @@ public class GameEngine implements Runnable {
         setMenu(gameState);
         setDesc(gameState);
     }
+    //Generates a list of character names to choose which to load
     public void loadGame(){
         user.setName(choice);
         user.loadChar();
@@ -382,6 +394,11 @@ public class GameEngine implements Runnable {
         setMenu(gameState);
         setDesc(gameState);
     }
+    /*
+    These functions handle the character creation process. Class choice will
+    auto-fill the needed character starting stuff while the custom option uses
+    the subsequent three functions to pick their load out.
+    */
     public String chooseClass() {
         switch(choice){
             case "Warrior": {
@@ -584,6 +601,7 @@ public class GameEngine implements Runnable {
             logText = "You have " + choicesLeft + " choices left.\n";
         }
     }
+    //Event handling
     public void handleEvent(){
         
     }
