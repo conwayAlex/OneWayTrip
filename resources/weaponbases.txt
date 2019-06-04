@@ -68,9 +68,625 @@ A wooden crossbow, requiring two hands.
 true
 
 
-Wooden Staff
-A magic staff made of wood, requuring two hands.
+Wood Staff
+A magic staff made of wood, requiring two hands.
 1
 10
+true
+
+
+Steel Sword
+A sword made from steel.
+5
+10
+false
+
+
+Steel Axe
+An axe made from steel.
+6
+9
+false
+
+
+Steel Mace
+A mace made from steel.
+7
+7
+false
+
+
+Steel Dagger
+A dagger made of steel.
+6
+8
+false
+
+
+Steel Greatsword
+A greatsword made of steel, requiring two hands.
+5
+15
+true
+
+
+Steel Greataxe
+A greataxe made of steel, requiring two hands.
+7
+12
+true
+
+
+Steel Greathammer
+A greathammer made of steel, requiring two hands.
+8
+11
+true
+
+
+Refined Wand
+A magic wand less crudely made.
+5
+10
+false
+
+
+Refined Bow
+A better strung bow, requiring two hands.
+7
+12
+true
+
+
+Refined Crossbow
+A crossbow with steel for better structure, requiring two hands.
+5
+15
+true
+
+
+Refined Staff
+A magic staff made with nicer wood, requiring two hands.
+5
+15
+true
+
+
+Sparkstone Sword
+A sword made using a strong yellowish orange metal.
+10
+15
+false
+
+
+Sparkstone Axe
+An axe made using a strong yellowish orange metal.
+12
+14
+false
+
+
+Sparkstone Mace
+A mace made using a strong yellowish orange metal.
+13
+13
+false
+
+
+Sparkstone Dagger
+A dagger made using a strong yellowish orange metal.
+12
+14
+false
+
+
+Sparkstone Greatsword
+A greatsword made using a strong yellowish orange metal., requiring two hands.
+10
+20
+true
+
+
+Sparkstone Greataxe
+A greataxe made using a strong yellowish orange metal., requiring two hands.
+13
+17
+true
+
+
+Sparkstone Greathammer
+A greathammer made using a strong yellowish orange metal., requiring two hands.
+14
+16
+true
+
+
+Polished Wand
+A magic wand with a smoother design.
+10
+15
+false
+
+
+Polished Bow
+A bow made of wood seemingly designed for comfort, requiring two hands.
+13
+17
+true
+
+
+Polished Crossbow
+A wooden crossbow with a more comfortable grip, requiring two hands.
+10
+20
+true
+
+
+Polished Staff
+A magic staff made of wood and given a smoother feel, requiring two hands.
+10
+20
+true
+
+
+Blacksteel Sword
+A sword made from special deep underground iron.
+15
+20
+false
+
+
+Blacksteel Axe
+An axe made from special deep underground iron.
+16
+19
+false
+
+
+Blacksteel Mace
+A mace made from special deep underground iron.
+17
+17
+false
+
+
+Blacksteel Dagger
+A dagger made from special deep underground iron.
+17
+18
+false
+
+
+Blacksteel Greatsword
+A greatsword made from special deep underground, requiring two hands.
+15
+25
+true
+
+
+Blacksteel Greataxe
+A greataxe made from special deep underground, requiring two hands.
+17
+22
+true
+
+
+Blacksteel Greathammer
+A greathammer made from special deep underground, requiring two hands.
+18
+20
+true
+
+
+Honed Wand
+A magic wand balanced by an arcanist.
+15
+20
+false
+
+
+Honed Bow
+A bow made for comfortable and accurate firing, requiring two hands.
+17
+22
+true
+
+
+Honed Crossbow
+A crossbow designed with an easier pulling mechanism, requiring two hands.
+15
+25
+true
+
+
+Honed Staff
+A magic staff balanced by an arcanist, requiring two hands.
+15
+25
+true
+
+
+Myco Sword
+A mysterious living metal was used to make this sword.
+20
+25
+false
+
+
+Myco Axe
+A mysterious living metal was used to make this axe.
+22
+24
+false
+
+
+Myco Mace
+A mysterious living metal was used to make this mace.
+23
+23
+false
+
+
+Myco Dagger
+A mysterious living metal was used to make this dagger.
+22
+24
+false
+
+
+Myco Greatsword
+A mysterious living metal was used to make this greatsword, requiring two hands.
+20
+30
+true
+
+
+Myco Greataxe
+A mysterious living metal was used to make this greataxe, requiring two hands.
+23
+27
+true
+
+
+Myco Greathammer
+A mysterious living metal was used to make this greathammer, requiring two hands.
+24
+26
+true
+
+
+Attuned Wand
+This wand appears more attuned with the mana around it.
+20
+25
+false
+
+
+Attuned Bow
+A bow whispering sounds of nature, requiring two hands.
+23
+27
+true
+
+
+Attuned Crossbow
+A crossbow seemingly in touch with the nature of combat, requiring two hands.
+20
+30
+true
+
+
+Attuned Staff
+This staff appears more attuned with the mana around it, requiring two hands.
+20
+30
+true
+
+
+Bloodiron Sword
+A sword made of the bleeding iron found atop tall peaks.
+25
+30
+false
+
+
+Bloodiron Axe
+An axe made of the bleeding iron found atop tall peaks.
+26
+29
+false
+
+
+Bloodiron Mace
+A mace made of the bleeding iron found atop tall peaks.
+27
+27
+false
+
+
+Bloodiron Dagger
+A dagger made of the bleeding iron found atop tall peaks.
+27
+29
+false
+
+
+Bloodiron Greatsword
+A greatsword made of the bleeding iron found atop tall peaks, requiring two hands.
+25
+35
+true
+
+
+Bloodiron Greataxe
+A greataxe made of the bleeding iron found atop tall peaks, requiring two hands.
+28
+33
+true
+
+
+Bloodiron Greathammer
+A greathammer made of the bleeding iron found atop tall peaks, requiring two hands.
+29
+31
+true
+
+
+Archwood Wand
+A magic wand made from the wood of an arch tree.
+25
+30
+false
+
+
+Archwood Bow
+A bow made from the wood of an arch tree, requiring two hands.
+28
+32
+true
+
+
+Archwood Crossbow
+A crossbow made from the wood of an arch tree, requiring two hands.
+25
+35
+true
+
+
+Archwood Staff
+A magic staff made from the wood of an arch tree, requiring two hands.
+25
+35
+true
+
+
+Mithril Sword
+A sword made from mithril.
+30
+35
+false
+
+
+Mithril Axe
+An axe made from mithril.
+32
+34
+false
+
+
+Mithril Mace
+A mace made from mithril.
+33
+33
+false
+
+
+Mithril Dagger
+A dagger made of mithril.
+32
+34
+false
+
+
+Mithril Greatsword
+A greatsword made of mithril, requiring two hands.
+30
+40
+true
+
+
+Mithril Greataxe
+A greataxe made of mithril, requiring two hands.
+33
+37
+true
+
+
+Mithril Greathammer
+A greathammer made of mithril, requiring two hands.
+34
+36
+true
+
+
+Fey Wand
+A magic wand blessed by fairies.
+30
+35
+false
+
+
+Fey Bow
+A bow made blessed by fairies, requiring two hands.
+33
+37
+true
+
+
+Fey Crossbow
+A wooden crossbow blessed by fairies, requiring two hands.
+30
+40
+true
+
+
+Fey Staff
+A magic staff blessed by fairies, requiring two hands.
+30
+40
+true
+
+
+Adamantium Sword
+A sword made from adamantium.
+35
+40
+false
+
+
+Adamantium Axe
+An axe made from adamantium.
+36
+39
+false
+
+
+Adamantium Mace
+A mace made from adamantium.
+37
+37
+false
+
+
+Adamantium Dagger
+A dagger made of adamantium.
+36
+37
+false
+
+
+Adamantium Greatsword
+A greatsword made of adamantium, requiring two hands.
+35
+45
+true
+
+
+Adamantium Greataxe
+A greataxe made of adamantium, requiring two hands.
+38
+42
+true
+
+
+Adamantium Greathammer
+A greathammer made of  adamantium, requiring two hands.
+39
+41
+true
+
+
+Umber Wand
+A magic wand made of pure black wood.
+35
+40
+false
+
+
+Umber Bow
+A bow made of pure black wood, requiring two hands.
+38
+42
+true
+
+
+Umber Crossbow
+A  pure black wooden crossbow, requiring two hands.
+35
+45
+true
+
+
+Umber Staff
+A magic staff made of pure black wood, requiring two hands.
+35
+45
+true
+
+
+Obsidian Sword
+A sword made from obsidian.
+40
+45
+false
+
+
+Obsidian Axe
+An axe made from obsidian.
+42
+44
+false
+
+
+Obsidian Mace
+A mace made from obsidian.
+43
+43
+false
+
+
+Obsidian Dagger
+A dagger made of obsidian.
+42
+44
+false
+
+
+Obsidian Greatsword
+A greatsword made of obsidian, requiring two hands.
+40
+50
+true
+
+
+Obsidian Greataxe
+A greataxe made of obsidian, requiring two hands.
+43
+47
+true
+
+
+Obsidian Greathammer
+A greathammer made of obsidian, requiring two hands.
+44
+46
+true
+
+
+Aetheria Wand
+A magic wand made of aetheria.
+40
+45
+false
+
+
+Aetheria Bow
+A bow made of aetheria, requiring two hands.
+43
+47
+true
+
+
+Aetheria Crossbow
+An aetheria crossbow, requiring two hands.
+40
+50
+true
+
+
+Aetheria Staff
+A magic staff made of aetheria, requiring two hands.
+40
+50
 true
 
