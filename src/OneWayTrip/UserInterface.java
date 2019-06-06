@@ -1,6 +1,7 @@
 package OneWayTrip;
 
 import java.awt.event.KeyEvent;
+import static java.lang.Thread.sleep;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ListSelectionModel;
@@ -15,7 +16,7 @@ import javax.swing.event.ListSelectionListener;
 public class UserInterface extends javax.swing.JFrame {
 
     public UserInterface() {
-        initComponents();
+        initComponents();      
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -32,9 +33,9 @@ public class UserInterface extends javax.swing.JFrame {
         jScrollPane5 = new javax.swing.JScrollPane();
         infoBox = new javax.swing.JTextArea();
         topPanel = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        eventLogPanel = new javax.swing.JScrollPane();
         eventLog = new javax.swing.JTextArea();
-        jScrollPane3 = new javax.swing.JScrollPane();
+        statusInfo = new javax.swing.JScrollPane();
         userStats = new javax.swing.JTextArea();
         resourcePanel = new javax.swing.JPanel();
         xpBar = new javax.swing.JProgressBar();
@@ -169,29 +170,29 @@ public class UserInterface extends javax.swing.JFrame {
         topPanel.setBackground(java.awt.Color.darkGray);
         topPanel.setForeground(java.awt.Color.white);
 
-        jScrollPane1.setBackground(java.awt.Color.darkGray);
-        jScrollPane1.setForeground(java.awt.Color.white);
-        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        eventLogPanel.setBackground(java.awt.Color.darkGray);
+        eventLogPanel.setForeground(java.awt.Color.white);
+        eventLogPanel.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        eventLogPanel.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         eventLog.setEditable(false);
         eventLog.setBackground(java.awt.Color.darkGray);
         eventLog.setColumns(20);
         eventLog.setForeground(java.awt.Color.white);
         eventLog.setRows(5);
-        jScrollPane1.setViewportView(eventLog);
+        eventLogPanel.setViewportView(eventLog);
 
-        jScrollPane3.setBackground(java.awt.Color.darkGray);
-        jScrollPane3.setForeground(java.awt.Color.white);
-        jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane3.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        statusInfo.setBackground(java.awt.Color.darkGray);
+        statusInfo.setForeground(java.awt.Color.white);
+        statusInfo.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        statusInfo.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         userStats.setEditable(false);
         userStats.setBackground(java.awt.Color.darkGray);
         userStats.setColumns(20);
         userStats.setForeground(java.awt.Color.white);
         userStats.setRows(5);
-        jScrollPane3.setViewportView(userStats);
+        statusInfo.setViewportView(userStats);
 
         resourcePanel.setBackground(java.awt.Color.darkGray);
         resourcePanel.setForeground(java.awt.Color.white);
@@ -296,7 +297,6 @@ public class UserInterface extends javax.swing.JFrame {
                             .addComponent(hpBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(mpBar, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
                             .addComponent(spBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(resourcePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(resourcePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(resourcePanelLayout.createSequentialGroup()
@@ -364,10 +364,10 @@ public class UserInterface extends javax.swing.JFrame {
             topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(topPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(eventLogPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3)
+                    .addComponent(statusInfo)
                     .addComponent(resourcePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -379,8 +379,8 @@ public class UserInterface extends javax.swing.JFrame {
                     .addGroup(topPanelLayout.createSequentialGroup()
                         .addComponent(resourcePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1)))
+                        .addComponent(statusInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE))
+                    .addComponent(eventLogPanel)))
         );
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
@@ -451,7 +451,6 @@ public class UserInterface extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(UserInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
 
         
         /* Create and display the form */
@@ -471,13 +470,12 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JLabel currSP;
     private javax.swing.JLabel currXP;
     private javax.swing.JTextArea eventLog;
+    private javax.swing.JScrollPane eventLogPanel;
     private javax.swing.JProgressBar hpBar;
     private javax.swing.JLabel hpLabel;
     private javax.swing.JTextArea infoBox;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JLabel label;
@@ -493,6 +491,7 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JPanel resourcePanel;
     private javax.swing.JProgressBar spBar;
     private javax.swing.JLabel spLabel;
+    private javax.swing.JScrollPane statusInfo;
     private javax.swing.JTextField textField;
     private javax.swing.JPanel topPanel;
     private javax.swing.JTextArea userStats;
@@ -513,6 +512,9 @@ public class UserInterface extends javax.swing.JFrame {
     private GameEngine game = new GameEngine(user);
     private String textEntry;
     private javax.swing.ListSelectionModel lsm;
+    private ResourceMonitor rm = new ResourceMonitor();
+    private boolean rmNotSpooled = true;
+    //private  ResourceMonitor rm;
     //My Methods and Classes
     /*
     This function will evaluate what menu item is selected at the time of pressing
@@ -545,6 +547,12 @@ public class UserInterface extends javax.swing.JFrame {
             infoItems = game.getDescText();
             infoBox.setText("");
             System.out.println("Will listen for next command.");
+        }
+        //Logic for when to spool resource monitor thread
+        if(user.getName() != null && rmNotSpooled){
+            Thread r = new Thread(rm);
+            r.start();
+            rmNotSpooled = false;
         }
     }
     /*
@@ -678,6 +686,20 @@ public class UserInterface extends javax.swing.JFrame {
                     menuIndex = i;
                     //eventLog.append(menuItems[i] + i + "\n");
                 }
+            }
+        }
+    }
+    private class ResourceMonitor implements Runnable {
+        @Override
+        public void run() {
+            initCharData();
+            while(true){
+                try {
+                    sleep(500);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(UserInterface.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                updateResourceVals();
             }
         }
     }

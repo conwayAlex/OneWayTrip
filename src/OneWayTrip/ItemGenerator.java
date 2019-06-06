@@ -138,4 +138,10 @@ public class ItemGenerator {
         Spell s = new Spell(line, r.readLine());
         return s;
     }
+    public int generateGold(int playerLevel){
+        return 0;
+    }
+    public Item[] generateLoot(int playerLevel){
+        return null;
+    }
 }

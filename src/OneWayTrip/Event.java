@@ -10,5 +10,10 @@ package OneWayTrip;
  * @author King of Ohio
  */
 public class Event {
-    
+    public int basicAttack(){
+        return 0;
+    }
+    public boolean recieveDamage(int d){
+        return true;
+    }
 }

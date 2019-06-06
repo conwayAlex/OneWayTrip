@@ -15,7 +15,7 @@ public class GameEngine implements Runnable {
     protected String gameState = "Start";
     protected String choice;
     protected boolean taskForUI = false;
-    protected boolean event = false;
+    protected boolean inEvent = false;
     //Menus and log
     private String[] menuItems,
                        optDesc;
@@ -23,8 +23,10 @@ public class GameEngine implements Runnable {
     //Control values
     private int choicesLeft;
     //Objects
-    private GameUser user;    
-    private ItemGenerator gen = new ItemGenerator();
+    private GameUser user;
+    protected Event event;
+    private ItemGenerator iGen = new ItemGenerator();
+    private EventGenerator eGen = new EventGenerator();
     
     public GameEngine(GameUser u){
         user = u;
@@ -47,8 +49,7 @@ public class GameEngine implements Runnable {
         if(taskForUI){
             return;
         }
-        if(event){
-            handleEvent();
+        if(inEvent){
             return;
         }
         switch(gameState){
@@ -88,6 +89,7 @@ public class GameEngine implements Runnable {
             case "Loading character": {
                 gameState = "Play";
                 loadGame();
+                break;
             }
             case "Choosing class": {
                 if(choice.compareTo("Custom") == 0){
@@ -130,11 +132,15 @@ public class GameEngine implements Runnable {
             case "Play": {
                 switch(choice){
                     case "Explore": {
-                        gameState = "Event";
+                        gameState = "Combat"; //this will need to be dynamic to the event generated
+                        event = eGen.testGen();
+                        logText = "An enemy appeared.\n";
+                        setMenu(gameState);
+                        setDesc(gameState);
                         break;
                     }
                     case "Character": {
-                        gameState = "Character";
+                        //gameState = "Character";
                         break;
                     }
                     case "Save": {
@@ -173,6 +179,24 @@ public class GameEngine implements Runnable {
                         break;
                     }
                 }
+            }
+            case "Combat": {
+                switch(choice) {
+                    case "Attack": {
+                        attack();
+                        break;
+                    }
+                    case "Actions": {
+                        break;
+                    }
+                    case "Items": {
+                        break;
+                    }
+                    case "Run": {
+                        break;
+                    }
+                }
+                break;
             }
         }
     }
@@ -227,6 +251,7 @@ public class GameEngine implements Runnable {
                 break;
             }
             case "Play": {
+                logText = "What shall you do?\n";
                 break;
             }
         }
@@ -269,6 +294,10 @@ public class GameEngine implements Runnable {
             }
             case "Play": {
                 menuItems = new String[] {"Explore", "Character", "Save", "Quit"};
+                break;
+            }
+            case "Combat": {
+                menuItems = new String[] {"Attack", "Actions", "Items", "Run"};
                 break;
             }
         }
@@ -350,6 +379,13 @@ public class GameEngine implements Runnable {
                                         "Returns you to the main menu and saves the game."};
                 break;
             }
+            case "Combat": {
+                optDesc = new String[] {"Attack with your weapon.",
+                                        "Use an ability or spell.",
+                                        "Use an item.",
+                                        "Attempt to escape."};
+                break;
+            }
         }
     }
     public String getLogText(){
@@ -360,6 +396,29 @@ public class GameEngine implements Runnable {
     }
     public String[] getDescText(){
         return optDesc;
+    }
+    //Generate list of players abilities and spells
+    public void generateASMenu(){
+        String[] menu = new String[user.knownAbilities.length + user.knownSpells.length];
+        int i;
+        int j = 0;
+        for(i = 0; i < user.knownAbilities.length; i++){
+            if(user.knownAbilities[i].getName() != null){
+                menu[j] = user.knownAbilities[i].getName();
+                j++;
+            }  
+        }
+        for(i = 0; i < user.knownSpells.length; i++){
+            if(user.knownSpells[i].getName() != null){
+                menu[j] = user.knownSpells[i].getName();
+                j++;
+            }
+        }
+        menuItems = menu;
+    }
+    //Generate players useable items list
+    public void generateUseMenu(){
+        
     }
     //Simply finds the last modified game file and opens it
     public void contGame(){
@@ -404,51 +463,51 @@ public class GameEngine implements Runnable {
             case "Warrior": {
                 user.setAllAS(3, 0, 0);
                 user.setTag(choice);
-                Weapon w = gen.generateWeaponPreFab("Iron Greataxe");
+                Weapon w = iGen.generateWeaponPreFab("Iron Greataxe");
                 user.equipGear(w);
                 Ability a;
-                a = gen.generateAbility("Rage");
+                a = iGen.generateAbility("Rage");
                 user.learnAbility(a);
-                a = gen.generateAbility("Double Strike");
+                a = iGen.generateAbility("Double Strike");
                 user.learnAbility(a);
                 return "The path of brawn!\n";
             }
             case "Ranger": {
                 user.setAllAS(0, 3, 0);
                 user.setTag(choice);
-                Weapon w = gen.generateWeaponPreFab("Wood Bow");
+                Weapon w = iGen.generateWeaponPreFab("Wood Bow");
                 user.equipGear(w);
                 Ability a;
-                a = gen.generateAbility("Evasive Stance");
+                a = iGen.generateAbility("Evasive Stance");
                 user.learnAbility(a);
-                a = gen.generateAbility("Precise Strike");
+                a = iGen.generateAbility("Precise Strike");
                 user.learnAbility(a);
                 return "The path of finesse!\n";
             }
             case "Magician": {
                 user.setAllAS(0, 0, 3);
                 user.setTag(choice);
-                Weapon w = gen.generateWeaponPreFab("Wood Wand");
+                Weapon w = iGen.generateWeaponPreFab("Wood Wand");
                 user.equipGear(w);
                 Spell s;
-                s = gen.generateSpell("Shock");
+                s = iGen.generateSpell("Shock");
                 user.learnSpell(s);
-                s = gen.generateSpell("Firespout");
+                s = iGen.generateSpell("Firespout");
                 user.learnSpell(s);
-                s = gen.generateSpell("Silence");
+                s = iGen.generateSpell("Silence");
                 user.learnSpell(s);
                 return "The path of sorcery!\n";
             }
             case "Knight": {
                 user.setAllAS(2, 1, 0);
                 user.setTag(choice);
-                Weapon w = gen.generateWeaponPreFab("Iron Sword");
+                Weapon w = iGen.generateWeaponPreFab("Iron Sword");
                 user.equipGear(w);
                 OffHand o;
-                o = gen.generateOffHandPreFab("Leather Buckler");
+                o = iGen.generateOffHandPreFab("Leather Buckler");
                 user.equipGear(o);
                 Ability a;
-                a = gen.generateAbility("Guard Stance");
+                a = iGen.generateAbility("Guard Stance");
                 user.learnAbility(a);
                 return "A path mixing brawn and finesse!\n";
             }
@@ -456,13 +515,13 @@ public class GameEngine implements Runnable {
                 user.setAllAS(2, 0, 1);
                 user.setTag(choice);
                 Weapon w;
-                w = gen.generateWeaponPreFab("Iron Sword");
+                w = iGen.generateWeaponPreFab("Iron Sword");
                 user.equipGear(w);
                 OffHand o;
-                o = gen.generateOffHandPreFab("Hemlock Talisman");
+                o = iGen.generateOffHandPreFab("Hemlock Talisman");
                 user.equipGear(o);
                 Ability a;
-                a = gen.generateAbility("Counter Stance");
+                a = iGen.generateAbility("Counter Stance");
                 user.learnAbility(a);
                 return "A path mixing brawn and sorcery!\n";
             }
@@ -470,13 +529,13 @@ public class GameEngine implements Runnable {
                 user.setAllAS(1, 2, 0);
                 user.setTag(choice);
                 Weapon w;
-                w = gen.generateWeaponPreFab("Iron Sword");
+                w = iGen.generateWeaponPreFab("Iron Sword");
                 user.equipGear(w);
                 OffHand o;
-                o = gen.generateOffHandPreFab("Leather Buckler");                
+                o = iGen.generateOffHandPreFab("Leather Buckler");                
                 user.equipGear(o);
                 Ability a;
-                a = gen.generateAbility("Counter Stance");
+                a = iGen.generateAbility("Counter Stance");
                 user.learnAbility(a);
                 return "A path mixing finesse and brawn!\n";
             }
@@ -484,15 +543,15 @@ public class GameEngine implements Runnable {
                 user.setAllAS(0, 2, 1);
                 user.setTag(choice);
                 Weapon w;
-                w = gen.generateWeaponPreFab("Iron Dagger");
+                w = iGen.generateWeaponPreFab("Iron Dagger");
                 user.equipGear(w);
                 Ability a;
-                a = gen.generateAbility("Precise Strike");
+                a = iGen.generateAbility("Precise Strike");
                 user.learnAbility(a);
-                a = gen.generateAbility("Double Strike");
+                a = iGen.generateAbility("Double Strike");
                 user.learnAbility(a);
                 Spell s;
-                s = gen.generateSpell("Cripple");
+                s = iGen.generateSpell("Cripple");
                 user.learnSpell(s);
                 return "A path mixing finesse and sorcery!\n";
             }
@@ -500,13 +559,13 @@ public class GameEngine implements Runnable {
                 user.setAllAS(1, 0, 2);
                 user.setTag(choice);
                 Weapon w;
-                w = gen.generateWeaponPreFab("Iron Mace");
+                w = iGen.generateWeaponPreFab("Iron Mace");
                 user.equipGear(w);
                 OffHand o;
-                o = gen.generateOffHandPreFab("Wood Shield");
+                o = iGen.generateOffHandPreFab("Wood Shield");
                 user.equipGear(o);
                 Spell s;
-                s = gen.generateSpell("Resistant Stance");
+                s = iGen.generateSpell("Resistant Stance");
                 user.learnSpell(s);
                 return "A path mixing sorcery and brawn!\n";
             }
@@ -514,15 +573,15 @@ public class GameEngine implements Runnable {
                 user.setAllAS(0, 1, 2);
                 user.setTag(choice);
                 Weapon w;
-                w = gen.generateWeaponPreFab("Iron Dagger");
+                w = iGen.generateWeaponPreFab("Iron Dagger");
                 user.equipGear(w);
                 Spell s;
-                s = gen.generateSpell("Frostbite");
+                s = iGen.generateSpell("Frostbite");
                 user.learnSpell(s);
-                s = gen.generateSpell("Dispel");
+                s = iGen.generateSpell("Dispel");
                 user.learnSpell(s);
                 Ability a;
-                a = gen.generateAbility("Precise Strike");
+                a = iGen.generateAbility("Precise Strike");
                 user.learnAbility(a);
                 return "A path mixing sorcery and finesse!\n";
             } 
@@ -531,7 +590,7 @@ public class GameEngine implements Runnable {
     }
     public void chooseWeapon() {
         Weapon w;
-        w = gen.generateWeaponPreFab(choice);
+        w = iGen.generateWeaponPreFab(choice);
         user.equipGear(w);
         if(user.gear[8].get2H()){
             gameState = "Choosing actions";
@@ -550,7 +609,7 @@ public class GameEngine implements Runnable {
     public void chooseOffHand() {
         if(choice.compareTo("None") != 0){
             OffHand o;
-            o = gen.generateOffHandPreFab(choice);
+            o = iGen.generateOffHandPreFab(choice);
             user.equipGear(o);
             choicesLeft = 1;
         }
@@ -588,17 +647,42 @@ public class GameEngine implements Runnable {
         }
         if(index > 7){
             Spell s;
-            s = gen.generateSpell(choice);
+            s = iGen.generateSpell(choice);
             user.learnSpell(s);
             choicesLeft--;
             logText = "You have " + choicesLeft + " choices left.\n";
         }
         else {
             Ability a;
-            a = gen.generateAbility(choice);
+            a = iGen.generateAbility(choice);
             user.learnAbility(a);
             choicesLeft--;
             logText = "You have " + choicesLeft + " choices left.\n";
+        }
+    }
+    //Functions for the combat commands
+    public void attack(){
+        int playerDam = user.attack(),
+            enemyDam = event.basicAttack();
+        boolean playerDead,
+                enemyDead;
+                        
+        enemyDead = event.recieveDamage(playerDam);
+        playerDead = user.recieveDamage(enemyDam);
+                        
+        if(enemyDead){
+            gameState = "Play";
+            logText = "Enemy defeated!\n";
+            inEvent = false;
+        }
+        else if(playerDead){
+            gameState = "Play";
+            logText = "You have fallen in battle.\n";
+            inEvent = false;
+        }
+        else {
+            logText = "Enemy took " + playerDam + " damage.\n"
+                + "You took " + enemyDam + " damage.\n";
         }
     }
     //Event handling

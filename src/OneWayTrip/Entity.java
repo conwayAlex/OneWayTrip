@@ -87,4 +87,5 @@ public class Entity {
     public int getMaxSP(){
         return staminaMax;
     }
+    //get res
 }

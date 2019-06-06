@@ -110,6 +110,10 @@ public class Player extends Entity {
         Random rng = new Random();
         return gear[8].getMinDam() + rng.nextInt(gear[8].getMaxDam());
     }
+    public boolean recieveDamage(int d){
+        this.setHP(this.getHP() - d);
+        return this.getHP() <= 0;
+    }
     //use ability
     //use spell
     //use item

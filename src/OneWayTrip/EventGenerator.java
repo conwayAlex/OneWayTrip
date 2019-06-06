@@ -5,6 +5,9 @@
  */
 package OneWayTrip;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Random;
 
 /**
@@ -13,12 +16,14 @@ import java.util.Random;
  */
 public class EventGenerator {
     
+    private int playerLevel;
+    private int[] eCountPerLvl = new int[] {2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     private int outcome;
     private int memory;
-    private final int ambush = 0,           //a fight 101-200
-                      instance = 1,         //a dungeon 301-400
-                      location = 2,         //a village 501-600
-                      something = 3;        //free item, weird guy, rocks fall, etc 701-800
+    private final int ambush = 0,           //a fight
+                      instance = 1,         //a dungeon
+                      location = 2,         //a village
+                      something = 3;        //free item, weird guy, rocks fall, etc
     private int ambushMin,
                 ambushMax,
                 instanceMin,
@@ -27,6 +32,7 @@ public class EventGenerator {
                 locationMax,
                 somethingMin,
                 somethingMax;
+    private ItemGenerator iGen = new ItemGenerator();
     private Random rng = new Random();
     private boolean valid = false;
     
@@ -40,13 +46,14 @@ public class EventGenerator {
         somethingMin = 3400;
         somethingMax = 3600;
     }
-    
+    public void setLevel(int l){
+        playerLevel = l;
+    }
     public Event generateEvent(){
         spinWheel();
-        //generate object based on outcome and return
+        
         return null;
     }
-    
     public void spinWheel(){
         valid = false;
         while(valid == false){
@@ -110,5 +117,49 @@ public class EventGenerator {
                 somethingMax -= 20;
             }
         }
+    }
+    public Enemy makeAmbush(){
+        int count = eCountPerLvl[playerLevel-1];
+        int pick = 0 + rng.nextInt(count-1);
+        int offset = 0;
+        for(int i = 0; i < playerLevel-1; i++){
+            offset += eCountPerLvl[i];
+        }
+        offset = offset *12;
+        pick = pick*12;
+        
+        try(FileReader reader = new FileReader("resources\\enemies.txt")){
+            BufferedReader bR = new BufferedReader(reader);
+            for(int i = 0; i <offset+pick;i++){
+                bR.readLine();
+            }
+            bR.readLine();
+            Enemy e = new Enemy(bR.readLine(),
+                    bR.readLine(),
+                    iGen.generateLoot(playerLevel),
+                    iGen.generateGold(playerLevel));
+            e.setStats(Integer.parseInt(bR.readLine()),
+                    Integer.parseInt(bR.readLine()),
+                    Integer.parseInt(bR.readLine()));
+            e.setAllRes(Integer.parseInt(bR.readLine()),
+                    Integer.parseInt(bR.readLine()),
+                    Integer.parseInt(bR.readLine()),
+                    Integer.parseInt(bR.readLine()),
+                    Integer.parseInt(bR.readLine()),
+                    Integer.parseInt(bR.readLine()));
+            return e;
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public Event testGen(){
+        Enemy e = new Enemy("Lame Jobber", "human", null, 0);
+        e.setStats(20, 0, 0);
+        e.setAllRes(0, 0, 0, 0, 0, 0);
+        e.setDamage(1, 5);
+        Combat c = new Combat(e);
+        return c;
     }
 }
