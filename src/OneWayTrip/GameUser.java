@@ -22,6 +22,7 @@ public class GameUser extends Player {
         this.setSP(100);
         this.setMaxSP(100);
         this.setBackpack(10);
+        this.setAllArch(333, 333, 333);
         this.setMaxAbilities(3);
         this.setMaxSpells(3);
         this.inventory = new Item[this.getBackpack()];
@@ -117,7 +118,7 @@ public class GameUser extends Player {
             this.setMaxMP(Integer.parseInt(bReader.readLine()));
             this.setMaxSP(Integer.parseInt(bReader.readLine()));
             this.setAllAS(Integer.parseInt(bReader.readLine()), Integer.parseInt(bReader.readLine()), Integer.parseInt(bReader.readLine()));
-            this.setAllArch(Double.parseDouble(bReader.readLine()), Double.parseDouble(bReader.readLine()), Double.parseDouble(bReader.readLine()));
+            this.setAllArch(Integer.parseInt(bReader.readLine()), Integer.parseInt(bReader.readLine()), Integer.parseInt(bReader.readLine()));
             this.setBackpack(Integer.parseInt(bReader.readLine()));
             this.setMaxAbilities(Integer.parseInt(bReader.readLine()));
             this.setMaxSpells(Integer.parseInt(bReader.readLine()));

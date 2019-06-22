@@ -2,6 +2,7 @@ package OneWayTrip;
 
 import java.awt.event.KeyEvent;
 import static java.lang.Thread.sleep;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ListSelectionModel;
@@ -16,7 +17,8 @@ import javax.swing.event.ListSelectionListener;
 public class UserInterface extends javax.swing.JFrame {
 
     public UserInterface() {
-        initComponents();      
+        initComponents();
+        //instanceMap.setVisible(true);
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -26,6 +28,10 @@ public class UserInterface extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         label = new javax.swing.JLabel();
         textField = new javax.swing.JTextField();
+        instanceMap = new javax.swing.JDialog();
+        jPanel2 = new javax.swing.JPanel();
+        dungeonName = new javax.swing.JLabel();
+        mapText = new javax.swing.JTextArea();
         mainPanel = new javax.swing.JPanel();
         bottomPanel = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -108,6 +114,59 @@ public class UserInterface extends javax.swing.JFrame {
         popWindowLayout.setVerticalGroup(
             popWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        instanceMap.setBackground(java.awt.Color.darkGray);
+        instanceMap.setForeground(java.awt.Color.white);
+        instanceMap.setLocation(new java.awt.Point(900, 0));
+        instanceMap.setSize(new java.awt.Dimension(275, 275));
+
+        jPanel2.setBackground(java.awt.Color.darkGray);
+        jPanel2.setForeground(java.awt.Color.white);
+
+        dungeonName.setBackground(java.awt.Color.darkGray);
+        dungeonName.setForeground(java.awt.Color.white);
+        dungeonName.setText("Dungeon Map");
+
+        mapText.setBackground(java.awt.Color.darkGray);
+        mapText.setColumns(20);
+        mapText.setForeground(java.awt.Color.white);
+        mapText.setLineWrap(true);
+        mapText.setRows(5);
+        mapText.setWrapStyleWord(true);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(mapText)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(dungeonName)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(dungeonName)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(mapText, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout instanceMapLayout = new javax.swing.GroupLayout(instanceMap.getContentPane());
+        instanceMap.getContentPane().setLayout(instanceMapLayout);
+        instanceMapLayout.setHorizontalGroup(
+            instanceMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        instanceMapLayout.setVerticalGroup(
+            instanceMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -415,10 +474,10 @@ public class UserInterface extends javax.swing.JFrame {
     private void menuKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_menuKeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
                 dispatchCommand();
-            }
+                //testMap();
+        }   
     }//GEN-LAST:event_menuKeyPressed
     private void textFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldActionPerformed
-        
         textEntry = textField.getText();
         eventLog.append("Is " + textEntry + " correct?\n");
         menuItems = game.getMenuText();
@@ -469,18 +528,22 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JLabel currMP;
     private javax.swing.JLabel currSP;
     private javax.swing.JLabel currXP;
+    private javax.swing.JLabel dungeonName;
     private javax.swing.JTextArea eventLog;
     private javax.swing.JScrollPane eventLogPanel;
     private javax.swing.JProgressBar hpBar;
     private javax.swing.JLabel hpLabel;
     private javax.swing.JTextArea infoBox;
+    private javax.swing.JDialog instanceMap;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JLabel label;
     private javax.swing.JLabel lvlLabel;
     private javax.swing.JPanel mainPanel;
+    private javax.swing.JTextArea mapText;
     private javax.swing.JLabel maxHP;
     private javax.swing.JLabel maxMP;
     private javax.swing.JLabel maxSP;
@@ -671,6 +734,16 @@ public class UserInterface extends javax.swing.JFrame {
         mpBar.setMaximum(user.getMaxMP());
         maxSP.setText(Integer.toString(user.getMaxSP()));
         spBar.setMaximum(user.getMaxSP());
+        
+    }
+    private void testMap(){
+        mapText.setText("");
+        Instance inst = new Instance();
+        inst.generateRoomLayout();
+        inst.combineAdjacentRooms(10, 10);
+        inst.generateRoomStruct(10, 10);
+        inst.generateConnections();
+        inst.generateMap();
         
     }
     //This is needed to let the descriptions update when the menu is interacted with

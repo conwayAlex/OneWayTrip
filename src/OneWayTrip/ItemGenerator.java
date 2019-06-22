@@ -8,6 +8,7 @@ package OneWayTrip;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Random;
 
 /**
  *
@@ -22,7 +23,111 @@ public class ItemGenerator {
     also receive context information about items to randomly generate for things
     like loot.
     */
-    
+    public void generateArmor(int b, int f, int s, int playerLevel) throws IOException{
+        int pick,
+            slot,
+            rarity;
+        String defense,
+               type = "";
+        String itemName,
+               desc;
+        Random rng = new Random();
+        
+        pick = 1 + rng.nextInt(b+f+s);
+        slot = rng.nextInt(3);
+        rarity = rng.nextInt(100);
+        
+        if(pick <= b){
+            pick = 1 + rng.nextInt(b+f+s);
+            if(pick <= b){
+                defense = "AR";
+            }
+            else if(pick > b && pick <= b+f){
+                defense = "AE";
+            }
+            else{
+                defense = "AS";
+            }
+        }
+        else if(pick > b && pick <= b+f){
+            pick = 1 + rng.nextInt(b+f+s);
+            if(pick <= b){
+                defense = "AE";            
+            }
+            else if(pick > b && pick <= b+f){
+                defense = "EV";
+            }
+            else{
+                defense = "ES";
+            }
+        }
+        else{
+            pick = 1 + rng.nextInt(b+f+s);
+            if(pick <= b){
+                defense = "AS";
+            }
+            else if(pick > b && pick <= b+f){
+                defense = "ES";
+            }
+            else{
+                defense = "SR";
+            }
+        }
+        switch(slot){
+            case 0: {
+                type = "head";
+                break;
+            }
+            case 1: {
+                type = "hands";
+                break;
+            }
+            case 2: {
+                type = "body";
+                break;
+            }
+            case 3: {
+                type = "feet";
+                break;
+            }
+        }
+        
+        try (FileReader reader = new FileReader("resources\\armorbases.txt")){
+            BufferedReader r = new BufferedReader(reader);
+            String line = r.readLine();
+            while(line.compareTo(defense) != 0){
+                line = r.readLine();
+            }
+            while(line.compareTo(type) != 0){
+                line = r.readLine();
+            }
+            itemName = r.readLine();
+            desc = r.readLine();
+            reader.close();
+        }
+        try(FileReader reader = new FileReader("resources\\armorstats.txt")){
+            BufferedReader r = new BufferedReader(reader);
+            String line = r.readLine();
+            while(line.compareTo(defense) != 0){
+                line = r.readLine();
+            }
+            while(line.compareTo(type) != 0){
+                line = r.readLine();
+            }
+            //find relevent level
+            //read in adjective
+            //read in stats
+            reader.close();
+        }
+        if(rarity > 95){
+            //double enchant
+            //reroll for chance at legendary 15%
+        }
+        else if (rarity > 75){ 
+            //single enchant, prefix or suffix 50/50
+        }
+        
+    }
     public Weapon generateWeaponPreFab(String itemName){
         try(FileReader reader = new FileReader("resources\\weaponbases.txt")){
             BufferedReader bReader = new BufferedReader(reader);
