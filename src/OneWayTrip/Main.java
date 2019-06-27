@@ -1,7 +1,7 @@
 
 package OneWayTrip;
 
-import java.io.File;
+import java.util.Random;
 
 /*
  * Main.java
@@ -12,18 +12,48 @@ import java.io.File;
  */
 public class Main {
     public static void main(String[] args) {
-        File f = new File("saves/");
-        File[] fa = new File[f.listFiles().length];
-        fa = f.listFiles();
-        System.out.println(fa[0].lastModified());
-        System.out.println(fa[1].lastModified());
         
-        String[] menuItems = new String[f.listFiles().length];
-        menuItems = f.list();
-        for(int i = 0; i < menuItems.length; i++){
-            menuItems[i] = menuItems[i].replace(".txt", "");
-            System.out.println(menuItems[i]);
+        for (int i = 0; i < 10; i++) {
+            Instance inst = new Instance();
+            inst.generateRoomLayout();
+            inst.combineAdjacentRooms(10, 10);
+            inst.generateRoomStruct(10, 10);
+            inst.generateConnections();
+            inst.generateMap();
         }
+        Instance inst = new Instance();
+        inst.generateRoomLayout();
+        inst.combineAdjacentRooms(10, 10);
+        /*for(int i = 0; i < 10; i++){
+            for(int j = 0; j < 10; j++){
+                System.out.print(inst.map[i][j]);
+            }
+            System.out.print('\n');
+        }*/
+        
+        
+        inst.generateRoomStruct(10, 10);
+        inst.generateConnections();
+        inst.generateMap();
+        
+        /*
+        System.out.println(inst.rooms.length);
+        for(int i = 0; i < inst.rooms.length; i++){
+            System.out.print("Room num: " + inst.rooms[i].roomNumber + " Adj Rms: "
+                    + inst.rooms[i].adjRooms[0] + " " + inst.rooms[i].adjRooms[1] + " "
+                    + inst.rooms[i].adjRooms[2] + " " + inst.rooms[i].adjRooms[3] + "\n");
+        }*/
+        /*
+        for(int i = 0; i < 10; i++){
+            for(int j = 0; j < 3; j++){
+                for(int k = 0; k < 10; k++){
+                    for(int l = 0; l < 3; l++){
+                        System.out.print(inst.mapGUI[i][k].tile[j][l]);
+                    }
+                }
+                System.out.print('\n');
+            }
+        }*/
         
     }
 }

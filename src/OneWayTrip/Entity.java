@@ -3,7 +3,7 @@ package OneWayTrip;
 /**
  * This entity class is designed with the basics
  * of a living creature in the game world.
- * All enemies, NPCs, and players will be based
+ * All enemies, some NPCs, and players will be based
  * from this. 
  * @author Alex Conway
  * @version 1.0 
@@ -87,4 +87,5 @@ public class Entity {
     public int getMaxSP(){
         return staminaMax;
     }
+    //get res
 }

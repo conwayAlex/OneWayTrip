@@ -12,6 +12,7 @@ public class GameUser extends Player {
     
     public GameUser(){
     }
+    //Simple initializing of values for a new character
     public void initNewUser(){
         this.setLevel(1);
         this.setHP(100);
@@ -21,12 +22,14 @@ public class GameUser extends Player {
         this.setSP(100);
         this.setMaxSP(100);
         this.setBackpack(10);
+        this.setAllArch(333, 333, 333);
         this.setMaxAbilities(3);
         this.setMaxSpells(3);
         this.inventory = new Item[this.getBackpack()];
         this.knownAbilities = new Ability[this.getMaxAbilities()];
         this.knownSpells = new Spell[this.getMaxSpells()];
     }
+    //Save the character.
     public void saveChar(){
         try(FileWriter writer = new FileWriter("saves\\" + this.getName() + ".txt");) {
             writer.write(this.getLevel()+"\r\n");
@@ -100,6 +103,7 @@ public class GameUser extends Player {
             e.printStackTrace();
         }
     }
+    //Load the character. 
     public void loadChar(){
         ItemGenerator g = new ItemGenerator();
         try(FileReader reader = new FileReader("saves\\" + this.getName() + ".txt")){
@@ -114,7 +118,7 @@ public class GameUser extends Player {
             this.setMaxMP(Integer.parseInt(bReader.readLine()));
             this.setMaxSP(Integer.parseInt(bReader.readLine()));
             this.setAllAS(Integer.parseInt(bReader.readLine()), Integer.parseInt(bReader.readLine()), Integer.parseInt(bReader.readLine()));
-            this.setAllArch(Double.parseDouble(bReader.readLine()), Double.parseDouble(bReader.readLine()), Double.parseDouble(bReader.readLine()));
+            this.setAllArch(Integer.parseInt(bReader.readLine()), Integer.parseInt(bReader.readLine()), Integer.parseInt(bReader.readLine()));
             this.setBackpack(Integer.parseInt(bReader.readLine()));
             this.setMaxAbilities(Integer.parseInt(bReader.readLine()));
             this.setMaxSpells(Integer.parseInt(bReader.readLine()));

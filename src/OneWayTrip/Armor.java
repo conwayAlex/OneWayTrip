@@ -11,18 +11,15 @@ public class Armor extends Equipment {
 
     private String type;
     
-    private String effect1,
-                   effect2;
-    
     private final int armor,
                       evasion,
                       spellResist;
     
-    public Armor(String name, String t, int a, int e, int s){
+    public Armor(String name, String desc, String t, int a, int e, int s, String e1, String e2){
 
         this.setName(name);
-        type = t;
-        
+        this.setDesc(desc);
+        type = t; 
         switch(type){
             case "head":{
                 this.setSlot(0);
@@ -45,6 +42,8 @@ public class Armor extends Equipment {
         armor = a;
         evasion = e;
         spellResist = s;
+        this.setEff1(e1);
+        this.setEff2(e2);
     }
     
     @Override

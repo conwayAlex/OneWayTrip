@@ -39,3 +39,339 @@ An iron dagger with latent magical energy.
 1
 1
 
+
+Steel Shield
+A shield made from steel.
+2
+0
+0
+
+
+Steel Parrying Dagger
+An iron dagger designed to catch a weapon.
+0
+2
+0
+
+
+Wyrmgum Talisman
+
+0
+0
+2
+
+
+Studded Buckler
+A smaller shield for more controlled use.
+1
+1
+0
+
+
+Refined Shield
+A shield made of wood and engraved with runes.
+1
+0
+1
+
+
+Infused Steel Dagger
+An iron dagger with latent magical energy.
+0
+1
+1
+
+
+Sparkstone Shield
+A shield made from sparkstone.
+2
+0
+0
+
+
+Sparkstone Parrying Dagger
+A sparkstone dagger designed to catch a weapon.
+0
+2
+0
+
+
+Bone Talisman
+
+0
+0
+2
+
+
+Scaled Buckler
+A smaller shield for more controlled use.
+1
+1
+0
+
+
+Polished Shield
+A shield made of wood and engraved with runes.
+1
+0
+1
+
+
+Blessed Sparkstone Dagger
+An iron dagger with latent magical energy.
+0
+1
+1
+
+
+Blacksteel Shield
+A shield made from blacksteel.
+2
+0
+0
+
+
+Blacksteel Parrying Dagger
+A blacksteel dagger designed to catch a weapon.
+0
+2
+0
+
+
+Crowfeather Talisman
+
+0
+0
+2
+
+
+Carapace Buckler
+A smaller shield for more controlled use.
+1
+1
+0
+
+
+Honed Shield
+A shield made of wood and engraved with runes.
+1
+0
+1
+
+
+Corrupted Blacksteel Dagger
+A blacksteel dagger with latent magical energy.
+0
+1
+1
+
+
+Myco Shield
+A shield made from myco.
+2
+0
+0
+
+
+Myco Parrying Dagger
+A myco dagger designed to catch a weapon.
+0
+2
+0
+
+
+Soaked Talisman
+ 
+0
+0
+2
+
+
+Direpelt Buckler
+A smaller shield for more controlled use.
+1
+1
+0
+
+
+Attuned Shield
+A shield made of wood and engraved with runes.
+1
+0
+1
+
+
+Bewitched Myco Dagger
+A myco dagger with latent magical energy.
+0
+1
+1
+
+
+Bloodiron Shield
+A shield made from bloodiron.
+2
+0
+0
+
+
+Bloodiron Parrying Dagger
+A bloodiron dagger designed to catch a weapon.
+0
+2
+0
+
+
+Chromatic Talisman
+
+0
+0
+2
+
+
+Stonefern Buckler
+A smaller shield for more controlled use.
+1
+1
+0
+
+
+Archwood Shield
+A shield made of wood and engraved with runes.
+1
+0
+1
+
+
+Haunted Bloodiron Dagger
+An iron dagger with latent magical energy.
+0
+1
+1
+
+
+Mithril Shield
+A shield made from mithril.
+2
+0
+0
+
+
+Mithril Parrying Dagger
+A mithril dagger designed to catch a weapon.
+0
+2
+0
+
+
+Wyverntooth Talisman
+
+0
+0
+2
+
+
+Dragonhide Buckler
+A smaller shield for more controlled use.
+1
+1
+0
+
+
+Fey Shield
+A shield made of wood and engraved with runes.
+1
+0
+1
+
+
+Accursed Mithril Dagger
+An iron dagger with latent magical energy.
+0
+1
+1
+
+
+Adamantium Shield
+A shield made from adamantium.
+2
+0
+0
+
+
+Adamantium Parrying Dagger
+An adamantium dagger designed to catch a weapon.
+0
+2
+0
+
+
+Charcoal Talisman
+
+0
+0
+2
+
+
+Mawskin Buckler
+A smaller shield for more controlled use.
+1
+1
+0
+
+
+Umber Shield
+A shield made of wood and engraved with runes.
+1
+0
+1
+
+
+Occult Adamantium Dagger
+An iron dagger with latent magical energy.
+0
+1
+1
+
+
+Obsidian Shield
+A shield made from obsidian.
+2
+0
+0
+
+
+Obsidian Parrying Dagger
+An obsidian dagger designed to catch a weapon.
+0
+2
+0
+
+
+Demonstrand Talisman
+
+0
+0
+2
+
+
+Elderflesh Buckler
+A smaller shield for more controlled use.
+1
+1
+0
+
+
+Aetheria Shield
+A shield made of wood and engraved with runes.
+1
+0
+1
+
+
+Eldritch Obsidian Dagger
+An iron dagger with latent magical energy.
+0
+1
+1
+

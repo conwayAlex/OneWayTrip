@@ -14,9 +14,9 @@ public class Player extends Entity {
     private int experience;
     private String classTag;
     //Archetype weights
-    private double brawn,
-                   finesse,
-                   sorcery;
+    private int brawn,
+                finesse,
+                sorcery;
     //Stat Values
     private int tenacity,
                 dexterity,
@@ -42,7 +42,7 @@ public class Player extends Entity {
         dexterity = d;
         arcane  = a;
     }
-    public void setAllArch(double b, double f, double s){
+    public void setAllArch(int b, int f, int s){
         brawn = b;
         finesse = f;
         sorcery = s;
@@ -72,13 +72,13 @@ public class Player extends Entity {
     public String getTag(){
         return classTag;
     }
-    public double getBra(){
+    public int getBra(){
         return brawn;
     }
-    public double getFin(){
+    public int getFin(){
         return finesse;
     }
-    public double getSor(){
+    public int getSor(){
         return sorcery;
     }
     public int getTen(){
@@ -109,6 +109,10 @@ public class Player extends Entity {
     public int attack(){
         Random rng = new Random();
         return gear[8].getMinDam() + rng.nextInt(gear[8].getMaxDam());
+    }
+    public boolean recieveDamage(int d){
+        this.setHP(this.getHP() - d);
+        return this.getHP() <= 0;
     }
     //use ability
     //use spell
