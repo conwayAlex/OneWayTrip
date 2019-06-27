@@ -249,4 +249,13 @@ public class ItemGenerator {
     public Item[] generateLoot(int playerLevel){
         return null;
     }
+    
+    public Item[] generateStoreItems(String storeType, int itemAmount) {
+        // TODO: Switch to return item array;
+        
+        
+        
+        return null;
+    }
+    
 }
