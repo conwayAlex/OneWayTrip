@@ -1,5 +1,3 @@
-
-
 package OneWayTrip;
 
 import java.util.Random;
@@ -30,8 +28,8 @@ public class Instance extends Event {
         int pick;
         boolean diag;
         while (roomCount < size) {
-            for (int i = 0; i < sizeX; i++) {
-                for (int j = 0; j < sizeY; j++) {
+            for (int i = 1; i < sizeX-1; i++) {
+                for (int j = 1; j < sizeY-1; j++) {
                     if (roomCount < 15) {
                         pick = 1 + rng.nextInt(1000);
                         if (map[i][j] == 0) {
@@ -49,7 +47,7 @@ public class Instance extends Event {
                                 if(!diag){
                                     map[i][j] = 1;
                                     roomCount++;
-                                    System.out.println("made room");
+                                    //System.out.println("made room");
                                 }
                             } 
                             else {
@@ -113,13 +111,11 @@ public class Instance extends Event {
         //shortest path algorithm
         //not working properly
         //Lee algorithm may be the key
-        
-        
-        
-        
         int pick;
         int closestRoom = 0;
         int r = 0;
+        int pair1 = 0,
+            pair2 = 0;
         double distCurr,
                distPrev = 10000;
         boolean collision = false;
@@ -127,7 +123,7 @@ public class Instance extends Event {
         
         s = new int[rooms.length]; // reachable array
         
-        //pick some room not currently reachable
+        //pick some room 
         while(!connected){
             for(int i = 0; i < rooms.length; i++){
                 if (i != r) {
@@ -161,6 +157,14 @@ public class Instance extends Event {
                 }
             }
         }
+        /*
+        for(int i = 0; i < rooms.length; i++){
+            System.out.print("Room num: " + rooms[i].roomNumber + " Adj Rms: "
+                    + rooms[i].adjRooms[0] + " " + rooms[i].adjRooms[1] + " "
+                    + rooms[i].adjRooms[2] + " " + rooms[i].adjRooms[3] + "\n");
+        }*/
+        
+        
         //arbitrarily pick a room to test what half of map not connected to other half
         pick = rng.nextInt(rooms.length);
         s[pick] = explore(pick);
@@ -171,10 +175,11 @@ public class Instance extends Event {
             }
         }
         //display array after first run through
+        /*
         for(int i = 0; i < s.length; i++){
             System.out.print(s[i] + " ");
-        }
-        System.out.println();
+        }*/
+        //System.out.println();
         if(!connected){
             while(!connected){
                 //this needs to be arbitrary
@@ -185,23 +190,24 @@ public class Instance extends Event {
                             if (i != j && s[j] != 0) {
                                 distCurr = Math.sqrt(Math.pow(rooms[i].x - rooms[j].x, 2) + Math.pow(rooms[i].y - rooms[j].y, 2));
                                 if (distCurr < distPrev) {
-                                    closestRoom = j;
+                                    pair1 = i;
+                                    pair2 = j;
                                     distPrev = distCurr;
                                 }
                             }
                         }
-                        for(int j = 0; j < 4; j++){
-                            if(rooms[i].adjRooms[j] == -1){
-                                rooms[i].adjRooms[j] = closestRoom;
-                                break;
-                            }
-                        }
-                        for(int j = 0; j < 4; j++){
-                            if(rooms[closestRoom].adjRooms[j] == -1){
-                                rooms[closestRoom].adjRooms[j] = i;
-                                break;
-                            }
-                        }
+                    }
+                }
+                distPrev = 10000;
+                for (int j = 0; j < 4; j++) {
+                    if (rooms[pair1].adjRooms[j] == -1) {
+                        rooms[pair1].adjRooms[j] = pair2;
+                        break;
+                    }
+                }
+                for (int j = 0; j < 4; j++) {
+                    if (rooms[pair2].adjRooms[j] == -1) {
+                        rooms[pair2].adjRooms[j] = pair1;
                         break;
                     }
                 }
@@ -216,20 +222,20 @@ public class Instance extends Event {
                         connected = false;
                     }
                 }
-            }
+            }  
         }
-        
-        
         //display effects
+        /*
         for(int i = 0; i < s.length; i++){
             s[i] = 0;
-        }
+        }*/
         pick = rng.nextInt(rooms.length);
         s[pick] = explore(pick);
+        /*
         for(int i = 0; i < s.length; i++){
             System.out.print(s[i] + " ");
-        }
-        System.out.println();
+        }*/
+        //System.out.println();
         
         
         //decide whether rooms should have additional connections and to what other rooms
@@ -237,7 +243,7 @@ public class Instance extends Event {
     }
     private int explore(int k) {
         s[k] = 1;
-        if (s[rooms[k].adjRooms[0]] != -1) {
+        if (s[rooms[k].adjRooms[0]] != -1 && s[rooms[k].adjRooms[0]] != 1) {
             s[rooms[k].adjRooms[0]] = explore(rooms[k].adjRooms[0]);
         }
         if (rooms[k].adjRooms[1] != -1 && s[rooms[k].adjRooms[1]] != 1) {
@@ -276,7 +282,7 @@ public class Instance extends Event {
                 }
             }
         }
-        //connectRooms();
+        connectRooms();
     }
     private int pickRoom(int k){
         //set s[i] = 1, ie set visited
@@ -398,50 +404,129 @@ public class Instance extends Event {
     }
     private void connectRooms(){
         int[][] builtPaths = new int[rooms.length*2][2];
+        int[] toBuild = new int[4];
+        int adjC = 0;
         int x1, x2, y1, y2;
+        double[] angle = new double[4];
+        String[] directions = new String[4];
         int k = 0;
         boolean built = false;
         boolean collision = false;
         //initialize for control
+        for(int i = 0; i < 4; i++){
+            angle[i] = -1;
+        }
         for(int i = 0; i < rooms.length*2; i++){
             for(int j = 0; j < 2; j++){
                 builtPaths[i][j] = -1;
             }
         }
-        //buildPath(rooms[0].x, rooms[1].x, rooms[0].y, rooms[1].y);
+        for (int m = 0; m < 4; m++) {
+            directions[m] = "null";
+        }
         
-        //for each room
-        for(int i = 0; i < rooms.length; i++){
-            for(int j = 0; j < 4; j++) {
-                for(int m = 0; m < builtPaths.length; m++){
-                    if(builtPaths[m][0] == rooms[i].roomNumber && builtPaths[m][1] == rooms[i].adjRooms[j]){
-                        built = true;
-                        break;
+        //for each possible amount of rooms
+        for(int i = 4; i > 0; i--){
+            //for each room
+            for(int j = 0; j < rooms.length; j++){
+                
+                //for each adj room
+                for(int m = 0; m < 4; m++){
+                    if(rooms[j].adjRooms[m] != -1){
+                        double ax = rooms[j].x,
+                               ay = rooms[j].y,
+                               bx = rooms[rooms[j].adjRooms[m]].x,
+                               by = rooms[rooms[j].adjRooms[m]].y;
+                        angle[m] = Math.toDegrees(Math.atan2(by - ay, bx - ax) + Math.PI);
+                        adjC++;
+                        if (angle[m] < 0) {
+                            angle[m] += 360;
+                        }
                     }
-                    else if(builtPaths[m][1] == rooms[i].roomNumber && builtPaths[m][0] == rooms[i].adjRooms[j]){
-                        built = true;
-                        break;
-                    }
-                    else{
-                        built = false;
+                    else {
+                        angle[m] = -1;
                     }
                 }
-                if(!built && rooms[i].adjRooms[j] != -1) {
-                    x1 = rooms[i].x;
-                    y1 = rooms[i].y;
-                    x2 = rooms[rooms[i].adjRooms[j]].x;
-                    y2 = rooms[rooms[i].adjRooms[j]].y;
+                if (adjC == i) {
+                    //System.out.println(j);
+                    //build connections logic
+                    for(int m = 0; m < 4; m++){
+                        if(angle[m] > 45 && angle[m] < 135){
+                            directions[m] = "west";
+                        }
+                        else if (angle[m] > 135 && angle[m] < 225){
+                            directions[m] = "south";
+                        }
+                        else if (angle[m] > 225 && angle[m] < 315){
+                            directions[m] = "east";
+                        }
+                        else if ((angle[m] > 315 || angle[m] < 45) && angle[m] != -1){
+                            directions[m] = "north";
+                        }
+                        else if (angle[m] == 45){
+                            directions[m] = "north west";
+                        } 
+                        else if (angle[m] == 135){
+                            directions[m] = "south west";
+                        }
+                        else if (angle[m] == 225){
+                            directions[m] = "south east";
+                        }
+                        else if (angle[m] == 315){
+                            directions[m] = "north east";
+                        }
+                        else {
+                            directions[m] = "null";
+                        }
+                    }
                     
-                    buildPath(x1, x2, y1, y2, collision);
-                    builtPaths[k][0] = rooms[i].roomNumber;
-                    builtPaths[k][1] = rooms[i].adjRooms[j];
-                    k++;
-                    built = false; //reset
+                    for(int m = 0; m < 4; m++){
+                        //System.out.println(directions[m]);
+                        for(int n = 0; n < 0; n++){
+                            if(directions[m].compareTo(directions[n]) == 0){
+                                System.out.println("BIG FUCKUS");
+                            }
+                        }
+                    }
+                    //System.out.println("end room " + i);
+                    //for each adj room
+                    for (int m = 0; m < 4; m++) {
+                        for (int n = 0; n < builtPaths.length; n++) {
+                            if (builtPaths[n][0] == rooms[j].roomNumber && builtPaths[n][1] == rooms[j].adjRooms[m]) {
+                                built = true;
+                                break;
+                            } else if (builtPaths[n][1] == rooms[j].roomNumber && builtPaths[n][0] == rooms[j].adjRooms[m]) {
+                                built = true;
+                                break;
+                            } else {
+                                built = false;
+                            }
+                        }
+                        if (!built && rooms[j].adjRooms[m] != -1) {
+                            x1 = rooms[j].x;
+                            y1 = rooms[j].y;
+                            x2 = rooms[rooms[j].adjRooms[m]].x;
+                            y2 = rooms[rooms[j].adjRooms[m]].y;
+                            //System.out.println("building path " + j + " " + rooms[j].adjRooms[m]);
+                            //buildPath(x1, x2, y1, y2);
+                            builtPaths[k][0] = rooms[j].roomNumber;
+                            builtPaths[k][1] = rooms[j].adjRooms[m];
+                            k++;
+                            built = false; //reset
+                        }
+                    }
+                }
+                adjC = 0;
+                for (int m = 0; m < 4; m++) {
+                    angle[m] = -1;
+                }
+                for (int m = 0; m < 4; m++) {
+                    directions[m] = "null";
                 }
             }
         }
     }
-    private void buildPath(int i1, int i2, int j1, int j2, boolean coll){
+    private void buildPath(int i1, int i2, int j1, int j2){
         int iTemp = i1, 
             jTemp = j1;
         int flip;
@@ -452,59 +537,25 @@ public class Instance extends Event {
             west = 0;
         boolean connected = false;
         
-        if(i2 >= i1 && j2 >= j1){
+        if (i2 >= i1 && j2 > j1) {
             south = 475;
             east = 475;
-            if(coll){
-                north = 25;
-                west = 25;
-            }
-            else {
-                north = 0;
-                west = 0;
-            }
         }
-        else if (i2 <= i1 && j2 <= j1){
+        else if (i2 <= i1 && j2 < j1) {
             north = 475;
             west = 475;
-            if(coll){
-               south = 25;
-               east = 25; 
-            }
-            else {
-                south = 0;
-                east = 0;
-            }
         }
-        else if(i2 >= i1 && j2 <= j1){
+        else if(i2 > i1 && j2 <= j1){
             south = 475;
             west = 475;
-            if(coll){
-                east = 25;
-                north = 25;
-            }
-            else {
-                east = 0;
-                north = 0;
-            }
         }
-        else if(i2 <= i1 && j2 >= j1){
-            south = 475;
+        else if(i2 < i1 && j2 >= j1){
+            north = 475;
             east = 475;
-            if(coll){
-                north = 25;
-                west = 25;
-            }
-            else {
-                north = 0;
-                west = 0;
-            }
         }
  
-        while(!connected){
-            //is right next to each other? yes: make straight path to
+        while (!connected) {
             if(lastFlip == ' '){
-                System.out.println("last flip = space");
                 if(iTemp == i2 && jTemp < j2){
                     while(jTemp < j2 - 1){
                         if (mapGUI[iTemp][jTemp + 1].tile[1][1] == '\u2588') {
@@ -580,311 +631,306 @@ public class Instance extends Event {
                     lastFlip = 'x';
                 }
             }
-            
-            else {
-                if (lastFlip == 'S' && iTemp == i2) {
-                    System.out.println("Immediately next to each other S");
-                    //if the last choice was south, and we only want to go east or west, adjust path
-                    if (iTemp == i2 && jTemp < j2 && mapGUI[iTemp][jTemp + 1].tile[1][1] == '\u2588') {
-                        mapGUI[iTemp][jTemp].tile[0][1] = '\u2503';
-                        mapGUI[iTemp][jTemp].tile[1][1] = '\u2517';
-                        mapGUI[iTemp][jTemp].tile[2][1] = '\u2588';
-                        mapGUI[iTemp][jTemp].tile[1][2] = '\u2501';
-                        while (jTemp < j2 - 1) {
-                            if (mapGUI[iTemp][jTemp + 1].tile[1][1] == '\u2588') {
-                                jTemp++;
-                                mapGUI[iTemp][jTemp].tile[1][0] = '\u2501';
-                                mapGUI[iTemp][jTemp].tile[1][1] = '\u2501';
-                                mapGUI[iTemp][jTemp].tile[1][2] = '\u2501';
-                                if (jTemp == j2 - 1) {
-                                    connected = true;
-                                    break;
-                                }
-                            } else {
-                                lastFlip = 'E';
+            else if (lastFlip == 'S' && iTemp == i2) {
+                System.out.println("Immediately next to each other from S");
+                //if the last choice was south, and we only want to go east or west, adjust path
+                if (iTemp == i2 && jTemp < j2 && mapGUI[iTemp][jTemp + 1].tile[1][1] == '\u2588') {
+                    mapGUI[iTemp][jTemp].tile[0][1] = '\u2503';
+                    mapGUI[iTemp][jTemp].tile[1][1] = '\u2517';
+                    mapGUI[iTemp][jTemp].tile[2][1] = '\u2588';
+                    mapGUI[iTemp][jTemp].tile[1][2] = '\u2501';
+                    while (jTemp < j2 - 1) {
+                        if (mapGUI[iTemp][jTemp + 1].tile[1][1] == '\u2588') {
+                            jTemp++;
+                            mapGUI[iTemp][jTemp].tile[1][0] = '\u2501';
+                            mapGUI[iTemp][jTemp].tile[1][1] = '\u2501';
+                            mapGUI[iTemp][jTemp].tile[1][2] = '\u2501';
+                            if (jTemp == j2 - 1) {
+                                connected = true;
                                 break;
                             }
-                        }
-                        if(jTemp == j2-1){
-                            connected = true;
-                        }
-                    } else if (iTemp == i2 && jTemp > j2 && mapGUI[iTemp][jTemp - 1].tile[1][1] == '\u2588') {
-                        mapGUI[iTemp][jTemp].tile[0][1] = '\u2503';
-                        mapGUI[iTemp][jTemp].tile[1][1] = '\u251b';
-                        mapGUI[iTemp][jTemp].tile[1][0] = '\u2501';
-                        mapGUI[iTemp][jTemp].tile[2][1] = '\u2588';
-                        while (jTemp > j2 + 1) {
-                            if (mapGUI[iTemp][jTemp - 1].tile[1][1] == '\u2588') {
-                                jTemp--;
-                                mapGUI[iTemp][jTemp].tile[1][0] = '\u2501';
-                                mapGUI[iTemp][jTemp].tile[1][1] = '\u2501';
-                                mapGUI[iTemp][jTemp].tile[1][2] = '\u2501';
-                                if (jTemp == j2 + 1) {
-                                    connected = true;
-                                    break;
-                                }
-                            } else {
-                                lastFlip = 'W';
-                                break;
-                            }
-                        }
-                        if(jTemp == j2+1){
-                            connected = true;
+                        } else {
+                            lastFlip = 'E';
+                            break;
                         }
                     }
-                    else {
+                    if (jTemp == j2 - 1) {
                         connected = true;
                     }
-                } else if (lastFlip == 'N' && iTemp == i2) {
-                    System.out.println("Immediately next to each other N");
-                    if (iTemp == i2 && jTemp < j2 && mapGUI[iTemp][jTemp + 1].tile[1][1] == '\u2588') {
-                        mapGUI[iTemp][jTemp].tile[1][1] = '\u250f';
-                        mapGUI[iTemp][jTemp].tile[1][2] = '\u2501';
-                        mapGUI[iTemp][jTemp].tile[0][1] = '\u2588';
-                        while (jTemp < j2 - 1) {
-                            if (mapGUI[iTemp][jTemp + 1].tile[1][1] == '\u2588') {
-                                jTemp++;
-                                mapGUI[iTemp][jTemp].tile[1][0] = '\u2501';
-                                mapGUI[iTemp][jTemp].tile[1][1] = '\u2501';
-                                mapGUI[iTemp][jTemp].tile[1][2] = '\u2501';
-                                if (jTemp == j2 - 1) {
-                                    connected = true;
-                                    break;
-                                }
-                            } else {
-                                lastFlip = 'E';
+                } else if (iTemp == i2 && jTemp > j2 && mapGUI[iTemp][jTemp - 1].tile[1][1] == '\u2588') {
+                    mapGUI[iTemp][jTemp].tile[0][1] = '\u2503';
+                    mapGUI[iTemp][jTemp].tile[1][1] = '\u251b';
+                    mapGUI[iTemp][jTemp].tile[1][0] = '\u2501';
+                    mapGUI[iTemp][jTemp].tile[2][1] = '\u2588';
+                    while (jTemp > j2 + 1) {
+                        if (mapGUI[iTemp][jTemp - 1].tile[1][1] == '\u2588') {
+                            jTemp--;
+                            mapGUI[iTemp][jTemp].tile[1][0] = '\u2501';
+                            mapGUI[iTemp][jTemp].tile[1][1] = '\u2501';
+                            mapGUI[iTemp][jTemp].tile[1][2] = '\u2501';
+                            if (jTemp == j2 + 1) {
+                                connected = true;
                                 break;
                             }
-                        }
-                        if(jTemp == j2-1){
-                            connected = true;
-                        }
-                    } else if (iTemp == i2 && jTemp > j2 && mapGUI[iTemp][jTemp - 1].tile[1][1] == '\u2588') {
-                        mapGUI[iTemp][jTemp].tile[1][1] = '\u2513';
-                        mapGUI[iTemp][jTemp].tile[1][0] = '\u2501';
-                        mapGUI[iTemp][jTemp].tile[0][1] = '\u2588';
-                        while (jTemp > j2 + 1) {
-                            if (mapGUI[iTemp][jTemp - 1].tile[1][1] == '\u2588') {
-                                jTemp--;
-                                mapGUI[iTemp][jTemp].tile[1][0] = '\u2501';
-                                mapGUI[iTemp][jTemp].tile[1][1] = '\u2501';
-                                mapGUI[iTemp][jTemp].tile[1][2] = '\u2501';
-                                if (jTemp == j2 + 1) {
-                                    connected = true;
-                                    break;
-                                }
-                            } else {
-                                lastFlip = 'W';
-                                break;
-                            }
-                        }
-                        if(jTemp == j2+1){
-                            connected = true;
+                        } else {
+                            lastFlip = 'W';
+                            break;
                         }
                     }
-                    else {
-                         connected = true;
-                    }
-                } else if (lastFlip == 'E' && jTemp == j2 && mapGUI[iTemp + 1][jTemp].tile[1][1] == '\u2588') {
-                    System.out.println("Immediately next to each other E");
-                    if (jTemp == j2 && iTemp > i2) {
-                        mapGUI[iTemp][jTemp].tile[1][1] = '\u251b';
-                        mapGUI[iTemp][jTemp].tile[0][1] = '\u2503';
-                        mapGUI[iTemp][jTemp].tile[1][2] = '\u2588';
-                        while (iTemp > i2 + 1) {
-                            if (mapGUI[iTemp + 1][jTemp].tile[1][1] == '\u2588') {
-                                iTemp++;
-                                mapGUI[iTemp][jTemp].tile[0][1] = '\u2503';
-                                mapGUI[iTemp][jTemp].tile[1][1] = '\u2503';
-                                mapGUI[iTemp][jTemp].tile[2][1] = '\u2503';
-                                if (iTemp == i2 + 1) {
-                                    connected = true;
-                                    break;
-                                }
-                            } else {
-                                lastFlip = 'S';
-                                break;
-                            }
-                        }
-                        if(iTemp == i2+1){
-                            connected = true;
-                        }
-                    } else if (jTemp == j2 && iTemp < i2 && mapGUI[iTemp + 1][jTemp].tile[1][1] == '\u2588') {
-                        mapGUI[iTemp][jTemp].tile[1][1] = '\u2513';
-                        mapGUI[iTemp][jTemp].tile[2][1] = '\u2503';
-                        mapGUI[iTemp][jTemp].tile[1][2] = '\u2588';
-                        while (iTemp < i2 - 1) {
-                            if (mapGUI[iTemp + 1][jTemp].tile[1][1] == '\u2588') {
-                                iTemp++;
-                                mapGUI[iTemp][jTemp].tile[0][1] = '\u2503';
-                                mapGUI[iTemp][jTemp].tile[1][1] = '\u2503';
-                                mapGUI[iTemp][jTemp].tile[2][1] = '\u2503';
-                                if (iTemp == i2 - 1) {
-                                    connected = true;
-                                    break;
-                                }
-                            } else {
-                                lastFlip = 'N';
-                                break;
-                            }
-                        }
-                        if(iTemp == i2-1){
-                            connected = true;
-                        }
-                    }
-                    else {
-                        connected = true;
-                    }
-                } else if (lastFlip == 'W' && jTemp == j2) {
-                    System.out.println("Immediately next to each other W");
-                    if (jTemp == j2 && iTemp > i2 && mapGUI[iTemp - 1][jTemp].tile[1][1] == '\u2588') {
-                        mapGUI[iTemp][jTemp].tile[1][1] = '\u2517';
-                        mapGUI[iTemp][jTemp].tile[0][1] = '\u2503';
-                        mapGUI[iTemp][jTemp].tile[1][0] = '\u2588';
-                        while (iTemp > i2 + 1) {
-                            if (mapGUI[iTemp - 1][jTemp].tile[1][1] == '\u2588') {
-                                iTemp--;
-                                mapGUI[iTemp][jTemp].tile[0][1] = '\u2503';
-                                mapGUI[iTemp][jTemp].tile[1][1] = '\u2503';
-                                mapGUI[iTemp][jTemp].tile[2][1] = '\u2503';
-                            } else {
-                                lastFlip = 'S';
-                                break;
-                            }
-                        }
-                        if(iTemp == i2+1){
-                            connected = true;
-                        }
-                    } else if (jTemp == j2 && iTemp < i2 && mapGUI[iTemp + 1][jTemp].tile[1][1] == '\u2588') {
-                        mapGUI[iTemp][jTemp].tile[1][1] = '\u250f';
-                        mapGUI[iTemp][jTemp].tile[2][1] = '\u2503';
-                        mapGUI[iTemp][jTemp].tile[1][0] = '\u2588';
-                        while (iTemp < i2 - 1) {
-                            if (mapGUI[iTemp + 1][jTemp].tile[1][1] == '\u2588') {
-                                iTemp++;
-                                mapGUI[iTemp][jTemp].tile[0][1] = '\u2503';
-                                mapGUI[iTemp][jTemp].tile[1][1] = '\u2503';
-                                mapGUI[iTemp][jTemp].tile[2][1] = '\u2503';
-                            } else {
-                                lastFlip = 'N';
-                                break;
-                            }
-                        }
-                        if (iTemp == i2 - 1) {
-                            connected = true;
-                        }
-                    }
-                    else {
-                        if(iTemp == i2+1){
-                            mapGUI[iTemp][jTemp].tile[1][1] = '\u2517';
-                            mapGUI[iTemp][jTemp].tile[0][1] = '\u2503';
-                            mapGUI[iTemp][jTemp].tile[1][0] = '\u2588';
-                        }
-                        else if (iTemp == i2-1){
-                            mapGUI[iTemp][jTemp].tile[1][1] = '\u250f';
-                            mapGUI[iTemp][jTemp].tile[2][1] = '\u2503';
-                            mapGUI[iTemp][jTemp].tile[1][0] = '\u2588';
-                        }
+                    if (jTemp == j2 + 1) {
                         connected = true;
                     }
                 } else {
-                    System.out.println("Must choose direction.");
-                    flip = 1 + rng.nextInt(1000);
-                    if (flip > 0 && flip <= south) {
-                        //move south
-                        System.out.println("chose S");
-                        if (iTemp + 1 < sizeX && mapGUI[iTemp + 1][jTemp].tile[1][1] == '\u2588' && lastFlip != 'N') {
-                            iTemp++;
-                            if (lastFlip == 'E') {
-                                mapGUI[iTemp - 1][jTemp].tile[1][1] = '\u2513';
-                                mapGUI[iTemp - 1][jTemp].tile[2][1] = '\u2503';
-                                mapGUI[iTemp - 1][jTemp].tile[1][2] = '\u2588';
-                            } else if (lastFlip == 'W') {
-                                mapGUI[iTemp - 1][jTemp].tile[1][1] = '\u250f';
-                                mapGUI[iTemp - 1][jTemp].tile[2][1] = '\u2503';
-                                mapGUI[iTemp - 1][jTemp].tile[1][0] = '\u2588';
-                            }
-                            mapGUI[iTemp][jTemp].tile[0][1] = '\u2503';
-                            mapGUI[iTemp][jTemp].tile[1][1] = '\u2503';
-                            mapGUI[iTemp][jTemp].tile[2][1] = '\u2503';
-                            if(iTemp == i2-1 && jTemp == j2){
-                                connected = true;
-                                System.out.println("should escape south");
-                            }
-                            lastFlip = 'S';
-                        }
-                    } else if (flip > south && flip <= south + north) {
-                        //move north
-                        System.out.println("chose N");
-                        if (iTemp - 1 >= 0 && mapGUI[iTemp - 1][jTemp].tile[1][1] == '\u2588' && lastFlip != 'S') {
-                            iTemp--;
-                            if (lastFlip == 'E') {
-                                mapGUI[iTemp + 1][jTemp].tile[1][1] = '\u251b';
-                                mapGUI[iTemp + 1][jTemp].tile[0][1] = '\u2503';
-                                mapGUI[iTemp + 1][jTemp].tile[1][2] = '\u2588';
-                            } else if (lastFlip == 'W') {
-                                mapGUI[iTemp + 1][jTemp].tile[1][1] = '\u2517';
-                                mapGUI[iTemp + 1][jTemp].tile[0][1] = '\u2503';
-                                mapGUI[iTemp + 1][jTemp].tile[1][0] = '\u2588';
-                            }
-                            mapGUI[iTemp][jTemp].tile[0][1] = '\u2503';
-                            mapGUI[iTemp][jTemp].tile[1][1] = '\u2503';
-                            mapGUI[iTemp][jTemp].tile[2][1] = '\u2503';
-                            if(iTemp == i2+1 && jTemp == j2){
-                                connected = true;
-                                System.out.println("should escape north");
-                            }
-                            lastFlip = 'N';
-                        }
-                    } else if (flip > south + north && flip <= south + north + east) {
-                        //move east
-                        System.out.println("chose E");
-                        if (jTemp + 1 < sizeY && mapGUI[iTemp][jTemp + 1].tile[1][1] == '\u2588' && lastFlip != 'W') {
+                    connected = true;
+                }
+            } else if (lastFlip == 'N' && iTemp == i2) {
+                System.out.println("Immediately next to each other N");
+                if (iTemp == i2 && jTemp < j2 && mapGUI[iTemp][jTemp + 1].tile[1][1] == '\u2588') {
+                    mapGUI[iTemp][jTemp].tile[1][1] = '\u250f';
+                    mapGUI[iTemp][jTemp].tile[1][2] = '\u2501';
+                    mapGUI[iTemp][jTemp].tile[0][1] = '\u2588';
+                    while (jTemp < j2 - 1) {
+                        if (mapGUI[iTemp][jTemp + 1].tile[1][1] == '\u2588') {
                             jTemp++;
-                            if (lastFlip == 'S') {
-                                mapGUI[iTemp][jTemp - 1].tile[1][1] = '\u2517';
-                                mapGUI[iTemp][jTemp - 1].tile[2][1] = '\u2588';
-                                mapGUI[iTemp][jTemp - 1].tile[1][2] = '\u2501';
-                            } else if (lastFlip == 'N') {
-                                mapGUI[iTemp][jTemp - 1].tile[1][1] = '\u250f';
-                                mapGUI[iTemp][jTemp - 1].tile[1][2] = '\u2501';
-                                mapGUI[iTemp][jTemp - 1].tile[0][1] = '\u2588';
-                            }
                             mapGUI[iTemp][jTemp].tile[1][0] = '\u2501';
                             mapGUI[iTemp][jTemp].tile[1][1] = '\u2501';
                             mapGUI[iTemp][jTemp].tile[1][2] = '\u2501';
-                            if(iTemp == i2 && jTemp == j2-1){
+                            if (jTemp == j2 - 1) {
                                 connected = true;
-                                System.out.println("should escape east");
+                                break;
                             }
+                        } else {
                             lastFlip = 'E';
+                            break;
                         }
-                    } else {
-                        //move west
-                        System.out.println("chose W");
-                        if (jTemp - 1 >= 0 && mapGUI[iTemp][jTemp - 1].tile[1][1] == '\u2588' && lastFlip != 'E') {
+                    }
+                    if (jTemp == j2 - 1) {
+                        connected = true;
+                    }
+                } else if (iTemp == i2 && jTemp > j2 && mapGUI[iTemp][jTemp - 1].tile[1][1] == '\u2588') {
+                    mapGUI[iTemp][jTemp].tile[1][1] = '\u2513';
+                    mapGUI[iTemp][jTemp].tile[1][0] = '\u2501';
+                    mapGUI[iTemp][jTemp].tile[0][1] = '\u2588';
+                    while (jTemp > j2 + 1) {
+                        if (mapGUI[iTemp][jTemp - 1].tile[1][1] == '\u2588') {
                             jTemp--;
-                            if (lastFlip == 'S') {
-                                mapGUI[iTemp][jTemp + 1].tile[1][1] = '\u251b';
-                                mapGUI[iTemp][jTemp + 1].tile[1][0] = '\u2501';
-                                mapGUI[iTemp][jTemp + 1].tile[2][1] = '\u2588';
-                            } else if (lastFlip == 'N') {
-                                mapGUI[iTemp][jTemp + 1].tile[1][1] = '\u2513';
-                                mapGUI[iTemp][jTemp + 1].tile[1][0] = '\u2501';
-                                mapGUI[iTemp][jTemp + 1].tile[0][1] = '\u2588';
-                            }
                             mapGUI[iTemp][jTemp].tile[1][0] = '\u2501';
                             mapGUI[iTemp][jTemp].tile[1][1] = '\u2501';
                             mapGUI[iTemp][jTemp].tile[1][2] = '\u2501';
-                            if(iTemp == i2 && jTemp == j2+1){
+                            if (jTemp == j2 + 1) {
                                 connected = true;
-                                System.out.println("should escape west");
+                                break;
                             }
+                        } else {
                             lastFlip = 'W';
+                            break;
                         }
+                    }
+                    if (jTemp == j2 + 1) {
+                        connected = true;
+                    }
+                } else {
+                    connected = true;
+                }
+            } else if (lastFlip == 'E' && jTemp == j2 && mapGUI[iTemp + 1][jTemp].tile[1][1] == '\u2588') {
+                System.out.println("Immediately next to each other E");
+                if (jTemp == j2 && iTemp > i2) {
+                    mapGUI[iTemp][jTemp].tile[1][1] = '\u251b';
+                    mapGUI[iTemp][jTemp].tile[0][1] = '\u2503';
+                    mapGUI[iTemp][jTemp].tile[1][2] = '\u2588';
+                    while (iTemp > i2 + 1) {
+                        if (mapGUI[iTemp - 1][jTemp].tile[1][1] == '\u2588') {
+                            iTemp--;
+                            mapGUI[iTemp][jTemp].tile[0][1] = '\u2503';
+                            mapGUI[iTemp][jTemp].tile[1][1] = '\u2503';
+                            mapGUI[iTemp][jTemp].tile[2][1] = '\u2503';
+                            if (iTemp == i2 + 1) {
+                                connected = true;
+                                break;
+                            }
+                        } else {
+                            lastFlip = 'S';
+                            break;
+                        }
+                    }
+                    if (iTemp == i2 + 1) {
+                        connected = true;
+                    }
+                } else if (jTemp == j2 && iTemp < i2 && mapGUI[iTemp + 1][jTemp].tile[1][1] == '\u2588') {
+                    mapGUI[iTemp][jTemp].tile[1][1] = '\u2513';
+                    mapGUI[iTemp][jTemp].tile[2][1] = '\u2503';
+                    mapGUI[iTemp][jTemp].tile[1][2] = '\u2588';
+                    while (iTemp < i2 - 1) {
+                        if (mapGUI[iTemp + 1][jTemp].tile[1][1] == '\u2588') {
+                            iTemp++;
+                            mapGUI[iTemp][jTemp].tile[0][1] = '\u2503';
+                            mapGUI[iTemp][jTemp].tile[1][1] = '\u2503';
+                            mapGUI[iTemp][jTemp].tile[2][1] = '\u2503';
+                            if (iTemp == i2 - 1) {
+                                connected = true;
+                                break;
+                            }
+                        } else {
+                            lastFlip = 'N';
+                            break;
+                        }
+                    }
+                    if (iTemp == i2 - 1) {
+                        connected = true;
+                    }
+                } else {
+                    connected = true;
+                }
+            } else if (lastFlip == 'W' && jTemp == j2) {
+                System.out.println("Immediately next to each other W");
+                if (jTemp == j2 && iTemp > i2 && mapGUI[iTemp - 1][jTemp].tile[1][1] == '\u2588') {
+                    mapGUI[iTemp][jTemp].tile[1][1] = '\u2517';
+                    mapGUI[iTemp][jTemp].tile[0][1] = '\u2503';
+                    mapGUI[iTemp][jTemp].tile[1][0] = '\u2588';
+                    while (iTemp > i2 + 1) {
+                        if (mapGUI[iTemp - 1][jTemp].tile[1][1] == '\u2588') {
+                            iTemp--;
+                            mapGUI[iTemp][jTemp].tile[0][1] = '\u2503';
+                            mapGUI[iTemp][jTemp].tile[1][1] = '\u2503';
+                            mapGUI[iTemp][jTemp].tile[2][1] = '\u2503';
+                        } else {
+                            lastFlip = 'S';
+                            break;
+                        }
+                    }
+                    if (iTemp == i2 + 1) {
+                        connected = true;
+                    }
+                } else if (jTemp == j2 && iTemp < i2 && mapGUI[iTemp + 1][jTemp].tile[1][1] == '\u2588') {
+                    mapGUI[iTemp][jTemp].tile[1][1] = '\u250f';
+                    mapGUI[iTemp][jTemp].tile[2][1] = '\u2503';
+                    mapGUI[iTemp][jTemp].tile[1][0] = '\u2588';
+                    while (iTemp < i2 - 1) {
+                        if (mapGUI[iTemp + 1][jTemp].tile[1][1] == '\u2588') {
+                            iTemp++;
+                            mapGUI[iTemp][jTemp].tile[0][1] = '\u2503';
+                            mapGUI[iTemp][jTemp].tile[1][1] = '\u2503';
+                            mapGUI[iTemp][jTemp].tile[2][1] = '\u2503';
+                        } else {
+                            lastFlip = 'N';
+                            break;
+                        }
+                    }
+                    if (iTemp == i2 - 1) {
+                        connected = true;
+                    }
+                } else {
+                    if (iTemp == i2 + 1) {
+                        mapGUI[iTemp][jTemp].tile[1][1] = '\u2517';
+                        mapGUI[iTemp][jTemp].tile[0][1] = '\u2503';
+                        mapGUI[iTemp][jTemp].tile[1][0] = '\u2588';
+                    } else if (iTemp == i2 - 1) {
+                        mapGUI[iTemp][jTemp].tile[1][1] = '\u250f';
+                        mapGUI[iTemp][jTemp].tile[2][1] = '\u2503';
+                        mapGUI[iTemp][jTemp].tile[1][0] = '\u2588';
+                    }
+                    connected = true;
+                }
+            } else {
+                System.out.println("Must choose direction.");
+                flip = 1 + rng.nextInt(1000);
+                if (flip > 0 && flip <= south) {
+                    //move south
+                    System.out.println("chose S");
+                    if (iTemp + 1 < sizeX && mapGUI[iTemp + 1][jTemp].tile[1][1] == '\u2588' && lastFlip != 'N') {
+                        iTemp++;
+                        if (lastFlip == 'E') {
+                            mapGUI[iTemp - 1][jTemp].tile[1][1] = '\u2513';
+                            mapGUI[iTemp - 1][jTemp].tile[2][1] = '\u2503';
+                            mapGUI[iTemp - 1][jTemp].tile[1][2] = '\u2588';
+                        } else if (lastFlip == 'W') {
+                            mapGUI[iTemp - 1][jTemp].tile[1][1] = '\u250f';
+                            mapGUI[iTemp - 1][jTemp].tile[2][1] = '\u2503';
+                            mapGUI[iTemp - 1][jTemp].tile[1][0] = '\u2588';
+                        }
+                        mapGUI[iTemp][jTemp].tile[0][1] = '\u2503';
+                        mapGUI[iTemp][jTemp].tile[1][1] = '\u2503';
+                        mapGUI[iTemp][jTemp].tile[2][1] = '\u2503';
+                        if (iTemp == i2 - 1 && jTemp == j2) {
+                            connected = true;
+                            System.out.println("should escape south");
+                        }
+                        lastFlip = 'S';
+                    }
+                } else if (flip > south && flip <= south + north) {
+                    //move north
+                    System.out.println("chose N");
+                    if (iTemp - 1 >= 0 && mapGUI[iTemp - 1][jTemp].tile[1][1] == '\u2588' && lastFlip != 'S') {
+                        iTemp--;
+                        if (lastFlip == 'E') {
+                            mapGUI[iTemp + 1][jTemp].tile[1][1] = '\u251b';
+                            mapGUI[iTemp + 1][jTemp].tile[0][1] = '\u2503';
+                            mapGUI[iTemp + 1][jTemp].tile[1][2] = '\u2588';
+                        } else if (lastFlip == 'W') {
+                            mapGUI[iTemp + 1][jTemp].tile[1][1] = '\u2517';
+                            mapGUI[iTemp + 1][jTemp].tile[0][1] = '\u2503';
+                            mapGUI[iTemp + 1][jTemp].tile[1][0] = '\u2588';
+                        }
+                        mapGUI[iTemp][jTemp].tile[0][1] = '\u2503';
+                        mapGUI[iTemp][jTemp].tile[1][1] = '\u2503';
+                        mapGUI[iTemp][jTemp].tile[2][1] = '\u2503';
+                        if (iTemp == i2 + 1 && jTemp == j2) {
+                            connected = true;
+                            System.out.println("should escape north");
+                        }
+                        lastFlip = 'N';
+                    }
+                } else if (flip > south + north && flip <= south + north + east) {
+                    //move east
+                    System.out.println("chose E");
+                    if (jTemp + 1 < sizeY && mapGUI[iTemp][jTemp + 1].tile[1][1] == '\u2588' && lastFlip != 'W') {
+                        jTemp++;
+                        if (lastFlip == 'S') {
+                            mapGUI[iTemp][jTemp - 1].tile[1][1] = '\u2517';
+                            mapGUI[iTemp][jTemp - 1].tile[2][1] = '\u2588';
+                            mapGUI[iTemp][jTemp - 1].tile[1][2] = '\u2501';
+                        } else if (lastFlip == 'N') {
+                            mapGUI[iTemp][jTemp - 1].tile[1][1] = '\u250f';
+                            mapGUI[iTemp][jTemp - 1].tile[1][2] = '\u2501';
+                            mapGUI[iTemp][jTemp - 1].tile[0][1] = '\u2588';
+                        }
+                        mapGUI[iTemp][jTemp].tile[1][0] = '\u2501';
+                        mapGUI[iTemp][jTemp].tile[1][1] = '\u2501';
+                        mapGUI[iTemp][jTemp].tile[1][2] = '\u2501';
+                        if (iTemp == i2 && jTemp == j2 - 1) {
+                            connected = true;
+                            System.out.println("should escape east");
+                        } else if (iTemp == i2 - 1 && jTemp == j2) {
+                            connected = true;
+                        }
+                        lastFlip = 'E';
+                    }
+                } else if (flip > south + north + east && flip <= south + north + east + west) {
+                    //move west
+                    System.out.println("chose W");
+                    if (jTemp - 1 >= 0 && mapGUI[iTemp][jTemp - 1].tile[1][1] == '\u2588' && lastFlip != 'E') {
+                        jTemp--;
+                        if (lastFlip == 'S') {
+                            mapGUI[iTemp][jTemp + 1].tile[1][1] = '\u251b';
+                            mapGUI[iTemp][jTemp + 1].tile[1][0] = '\u2501';
+                            mapGUI[iTemp][jTemp + 1].tile[2][1] = '\u2588';
+                        } else if (lastFlip == 'N') {
+                            mapGUI[iTemp][jTemp + 1].tile[1][1] = '\u2513';
+                            mapGUI[iTemp][jTemp + 1].tile[1][0] = '\u2501';
+                            mapGUI[iTemp][jTemp + 1].tile[0][1] = '\u2588';
+                        }
+                        mapGUI[iTemp][jTemp].tile[1][0] = '\u2501';
+                        mapGUI[iTemp][jTemp].tile[1][1] = '\u2501';
+                        mapGUI[iTemp][jTemp].tile[1][2] = '\u2501';
+                        if (iTemp == i2 && jTemp == j2 + 1) {
+                            connected = true;
+                            System.out.println("should escape west");
+                        }
+                        lastFlip = 'W';
                     }
                 }
             }
+
         }
     }
     protected class Room {
@@ -894,12 +940,18 @@ public class Instance extends Event {
         protected int x,
                       y;
         protected int[] adjRooms = new int[4];
+        protected int[][] reserves = new int[4][3]; //room #, x, y for each possible adj room
         
         public Room(){
             adjRooms[0] = -1;
             adjRooms[1] = -1;
             adjRooms[2] = -1;
             adjRooms[3] = -1;
+            for(int i = 0; i < 4; i++){
+                for(int j = 0; j < 3; j++){
+                    reserves[i][j] = -1;
+                }
+            }
         }
         
     }

@@ -18,7 +18,7 @@ public class UserInterface extends javax.swing.JFrame {
 
     public UserInterface() {
         initComponents();
-        //instanceMap.setVisible(true);
+        instanceMap.setVisible(true);
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -473,8 +473,8 @@ public class UserInterface extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     private void menuKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_menuKeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-                dispatchCommand();
-                //testMap();
+                //dispatchCommand();
+                testMap();
         }   
     }//GEN-LAST:event_menuKeyPressed
     private void textFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldActionPerformed
